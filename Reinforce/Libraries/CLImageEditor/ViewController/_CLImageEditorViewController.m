@@ -337,6 +337,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
         [_scrollView addSubview:_imageView];
         [self refreshImageView];
     }
+
+
 }
 
 - (void)didReceiveMemoryWarning

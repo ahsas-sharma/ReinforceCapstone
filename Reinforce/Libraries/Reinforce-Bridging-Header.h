@@ -5,4 +5,3 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "CLImageEditor.h"
 #import "CLImageToolInfo.h"
-//#import "CLImageEditorTheme.h"

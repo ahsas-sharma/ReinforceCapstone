@@ -20,19 +20,26 @@ class ViewController: UIViewController, CLImageEditorDelegate {
 //        setupCLImageEditorTools()
     }
 
-    @IBAction func showEditorTapped() {
-        showEditor()
-    }
-    func showEditor() {
-        editor = CLImageEditor(image: UIImage(named:"wallpaper"), delegate: self)
-        self.present(editor, animated: true, completion: {});
+    @IBAction func buttonTapped() {
+       
     }
 
-    func setupCLImageEditorTools() {
-        let tool1 = editor.toolInfo.subToolInfo(withToolName: "CLFilterTool", recursive: false)
-        let tool2 = editor.toolInfo.subToolInfo(withToolName: "CLBlurTool", recursive: false)
-        tool1?.available = false
-        tool2?.available = false
-    }
+
+//    func showEditor() {
+//        editor = CLImageEditor(image: UIImage(named:"wallpaper"), delegate: self)
+//        self.present(editor, animated: true, completion: {
+//
+//            let textTool = self.editor.toolInfo.subToolInfo(withToolName: "CLTextTool", recursive: false)
+//            print(textTool)
+//
+//        });
+//    }
+//
+//    func setupCLImageEditorTools() {
+//        let tool1 = editor.toolInfo.subToolInfo(withToolName: "CLFilterTool", recursive: false)
+//        let tool2 = editor.toolInfo.subToolInfo(withToolName: "CLBlurTool", recursive: false)
+//        tool1?.available = false
+//        tool2?.available = false
+//    }
 }
 

@@ -53,7 +53,16 @@
 		FC08DBE8221694CA00C96013 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBE7221694C900C96013 /* Accelerate.framework */; };
 		FC08DBEA221694D300C96013 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBE9221694D300C96013 /* CoreGraphics.framework */; };
 		FC08DBEC221694D900C96013 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBEB221694D900C96013 /* CoreImage.framework */; };
-		FC08DBEF2216962200C96013 /* wallpaper.png in Resources */ = {isa = PBXBuildFile; fileRef = FC08DBEE2216962200C96013 /* wallpaper.png */; };
+		FC3C5D622217DD7900B1E019 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D612217DD7900B1E019 /* Constants.swift */; };
+		FC3C5D642217E43900B1E019 /* FrazeItClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D632217E43900B1E019 /* FrazeItClient.swift */; };
+		FC3C5D6E2217E7BD00B1E019 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D662217E7BC00B1E019 /* Error.swift */; };
+		FC3C5D6F2217E7BD00B1E019 /* Accessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D682217E7BC00B1E019 /* Accessor.swift */; };
+		FC3C5D702217E7BD00B1E019 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D692217E7BC00B1E019 /* Element.swift */; };
+		FC3C5D712217E7BD00B1E019 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = FC3C5D6A2217E7BC00B1E019 /* Config.xcconfig */; };
+		FC3C5D722217E7BD00B1E019 /* XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D6B2217E7BC00B1E019 /* XML.swift */; };
+		FC3C5D732217E7BD00B1E019 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D6C2217E7BC00B1E019 /* Parser.swift */; };
+		FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D752217F03B00B1E019 /* Quote.swift */; };
+		FC70A89622180EF90072C315 /* QuotesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC70A89522180EF90072C315 /* QuotesSearchViewController.swift */; };
 		FC854D96220D778B00E2FB51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D95220D778B00E2FB51 /* AppDelegate.swift */; };
 		FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D97220D778B00E2FB51 /* ViewController.swift */; };
 		FC854D9B220D778B00E2FB51 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC854D99220D778B00E2FB51 /* Main.storyboard */; };
@@ -153,7 +162,17 @@
 		FC08DBE7221694C900C96013 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FC08DBE9221694D300C96013 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FC08DBEB221694D900C96013 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		FC08DBEE2216962200C96013 /* wallpaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallpaper.png; sourceTree = "<group>"; };
+		FC3C5D612217DD7900B1E019 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FC3C5D632217E43900B1E019 /* FrazeItClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrazeItClient.swift; sourceTree = "<group>"; };
+		FC3C5D662217E7BC00B1E019 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		FC3C5D672217E7BC00B1E019 /* SwiftyXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyXMLParser.h; sourceTree = "<group>"; };
+		FC3C5D682217E7BC00B1E019 /* Accessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessor.swift; sourceTree = "<group>"; };
+		FC3C5D692217E7BC00B1E019 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		FC3C5D6A2217E7BC00B1E019 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		FC3C5D6B2217E7BC00B1E019 /* XML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XML.swift; sourceTree = "<group>"; };
+		FC3C5D6C2217E7BC00B1E019 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		FC3C5D752217F03B00B1E019 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
+		FC70A89522180EF90072C315 /* QuotesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesSearchViewController.swift; sourceTree = "<group>"; };
 		FC854D92220D778B00E2FB51 /* Reinforce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reinforce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC854D95220D778B00E2FB51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC854D97220D778B00E2FB51 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -411,10 +430,34 @@
 			isa = PBXGroup;
 			children = (
 				FC08DB532216762B00C96013 /* Reinforce-Bridging-Header.h */,
+				FC3C5D652217E7BC00B1E019 /* SwiftyXMLParser */,
 				FC08DB522216761400C96013 /* DZNEmptyDataSet */,
 				FC08DB5A2216949100C96013 /* CLImageEditor */,
 			);
 			path = Libraries;
+			sourceTree = "<group>";
+		};
+		FC3C5D652217E7BC00B1E019 /* SwiftyXMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				FC3C5D662217E7BC00B1E019 /* Error.swift */,
+				FC3C5D672217E7BC00B1E019 /* SwiftyXMLParser.h */,
+				FC3C5D682217E7BC00B1E019 /* Accessor.swift */,
+				FC3C5D692217E7BC00B1E019 /* Element.swift */,
+				FC3C5D6A2217E7BC00B1E019 /* Config.xcconfig */,
+				FC3C5D6B2217E7BC00B1E019 /* XML.swift */,
+				FC3C5D6C2217E7BC00B1E019 /* Parser.swift */,
+			);
+			path = SwiftyXMLParser;
+			sourceTree = "<group>";
+		};
+		FC3C5D772217F20500B1E019 /* FrazeIt */ = {
+			isa = PBXGroup;
+			children = (
+				FC3C5D632217E43900B1E019 /* FrazeItClient.swift */,
+				FC3C5D752217F03B00B1E019 /* Quote.swift */,
+			);
+			path = FrazeIt;
 			sourceTree = "<group>";
 		};
 		FC854D89220D778B00E2FB51 = {
@@ -437,7 +480,6 @@
 		FC854D94220D778B00E2FB51 /* Reinforce */ = {
 			isa = PBXGroup;
 			children = (
-				FC08DBEE2216962200C96013 /* wallpaper.png */,
 				FC08DBED221695A400C96013 /* Libraries */,
 				FC854DAE220D97E700E2FB51 /* Storyboards */,
 				FC854DAD220D97CE00E2FB51 /* Supporting Files */,
@@ -452,6 +494,8 @@
 			isa = PBXGroup;
 			children = (
 				FC854D9C220D778B00E2FB51 /* Reinforce.xcdatamodeld */,
+				FC3C5D612217DD7900B1E019 /* Constants.swift */,
+				FC3C5D772217F20500B1E019 /* FrazeIt */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -461,6 +505,7 @@
 			children = (
 				FC854D97220D778B00E2FB51 /* ViewController.swift */,
 				FC08DB572216767A00C96013 /* HomeTableViewController.swift */,
+				FC70A89522180EF90072C315 /* QuotesSearchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -554,7 +599,7 @@
 				FC08DBCD2216949100C96013 /* CLImageEditor.bundle in Resources */,
 				FC854DA0220D778D00E2FB51 /* Assets.xcassets in Resources */,
 				FC854D9B220D778B00E2FB51 /* Main.storyboard in Resources */,
-				FC08DBEF2216962200C96013 /* wallpaper.png in Resources */,
+				FC3C5D712217E7BD00B1E019 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +614,8 @@
 				FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */,
 				FC08DBBA2216949100C96013 /* CLFilterTool.m in Sources */,
 				FC08DBE1221694A800C96013 /* CLPickerView.m in Sources */,
+				FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */,
+				FC3C5D732217E7BD00B1E019 /* Parser.swift in Sources */,
 				FC08DBCB2216949100C96013 /* CLImageEditorTheme.m in Sources */,
 				FC854D9E220D778B00E2FB51 /* Reinforce.xcdatamodeld in Sources */,
 				FC08DBE5221694A800C96013 /* CLPickerDrum.m in Sources */,
@@ -579,12 +626,17 @@
 				FC08DBBC2216949100C96013 /* CLDrawTool.m in Sources */,
 				FC08DBCA2216949100C96013 /* CLSplineInterpolator.m in Sources */,
 				FC08DBAF2216949100C96013 /* CLPixellateEffect.m in Sources */,
+				FC3C5D702217E7BD00B1E019 /* Element.swift in Sources */,
 				FC08DBAD2216949100C96013 /* CLClippingTool.m in Sources */,
 				FC08DBC92216949100C96013 /* UIDevice+SystemVersion.m in Sources */,
+				FC3C5D6E2217E7BD00B1E019 /* Error.swift in Sources */,
 				FC08DBB72216949100C96013 /* CLRotateTool.m in Sources */,
+				FC3C5D722217E7BD00B1E019 /* XML.swift in Sources */,
 				FC08DBC72216949100C96013 /* UIImage+Utility.m in Sources */,
 				FC08DBCC2216949100C96013 /* CLImageEditor.m in Sources */,
 				FC08DBBE2216949100C96013 /* CLImageEditorTheme+Private.m in Sources */,
+				FC3C5D642217E43900B1E019 /* FrazeItClient.swift in Sources */,
+				FC70A89622180EF90072C315 /* QuotesSearchViewController.swift in Sources */,
 				FC08DBC42216949100C96013 /* CLBlurTool.m in Sources */,
 				FC08DB562216762D00C96013 /* UIScrollView+EmptyDataSet.m in Sources */,
 				FC08DBC22216949100C96013 /* CLColorPickerView.m in Sources */,
@@ -594,6 +646,7 @@
 				FC08DBCE2216949100C96013 /* _CLImageEditorViewController.m in Sources */,
 				FC08DBC52216949100C96013 /* CLImageToolInfo.m in Sources */,
 				FC08DBC82216949100C96013 /* UIView+Frame.m in Sources */,
+				FC3C5D622217DD7900B1E019 /* Constants.swift in Sources */,
 				FC08DBE4221694A800C96013 /* CLTextLabel.m in Sources */,
 				FC08DBB52216949100C96013 /* CLEffectBase.m in Sources */,
 				FC08DBB02216949100C96013 /* CLBloomEffect.m in Sources */,
@@ -601,6 +654,7 @@
 				FC08DBBD2216949100C96013 /* UIView+CLImageToolInfo.m in Sources */,
 				FC08DBE2221694A800C96013 /* CLTextSettingView.m in Sources */,
 				FC08DBC12216949100C96013 /* CLImageToolInfo+Private.m in Sources */,
+				FC3C5D6F2217E7BD00B1E019 /* Accessor.swift in Sources */,
 				FC08DBB92216949100C96013 /* CLAdjustmentTool.m in Sources */,
 				FC08DBB12216949100C96013 /* CLHueEffect.m in Sources */,
 				FC08DBC02216949100C96013 /* CLCircleView.m in Sources */,
