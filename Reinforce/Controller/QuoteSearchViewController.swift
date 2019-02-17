@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuotesSearchViewController : UIViewController {
+class QuoteSearchViewController : UIViewController {
 
     var searchResult : QuoteSearchResult?
     var quotes = [Quote]()
@@ -35,31 +35,18 @@ class QuotesSearchViewController : UIViewController {
         })
     }
 
-}
-extension QuotesSearchViewController : UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print("Text Did End Editing")
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Search button was clicked")
-        searchBar.resignFirstResponder()
-        guard let searchText = searchBar.text, searchText != "" else {
-            return
-        }
-        frazeItClient.fetchQuotesForKeyword(searchText, page: 1, completionHandler: {
-            error, result, quotes in
-            self.processSearchResults(error: error, result: result, quotes: quotes, isFirst: true)
-        })
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
 
     func processSearchResults(error: Error?, result: QuoteSearchResult?, quotes: [Quote]?, isFirst: Bool) {
         guard error == nil, result != nil, quotes != nil else {
             return
         }
-        print("Available Pages : \(result?.availablePages) AND hasMore: \(result?.hasMore)")
+        print("CurrentPage: \(String(describing: result?.currentPage)) Available Pages : \(result?.availablePages) AND hasMore: \(String(describing: result?.hasMore))")
         print(result?.availablePages)
-        
+
+        // If its a follow up request, increment the current page
         if isFirst {
             self.searchResult = result
         } else {
@@ -70,16 +57,49 @@ extension QuotesSearchViewController : UISearchBarDelegate {
 
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            let resultsLeft = (self.searchResult?.totalAccessibleResults)! - ((self.searchResult?.currentPage)! * 9)
+            self.loadMoreResultsButton.setTitle("Load More Results (\(resultsLeft))", for: .normal)
             (self.searchResult?.hasMore)! ? self.loadMoreResultsButton.isEnabled = true : ()
         }
     }
+
+    func resetSearchResults() {
+        searchResult = nil
+        quotes.removeAll()
+        loadMoreResultsButton.setTitle("Load More Results", for: .normal)
+        loadMoreResultsButton.isEnabled = false
+        tableView.reloadData()
+    }
+
+}
+extension QuoteSearchViewController : UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print("Text Did End Editing")
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
+        guard let searchText = searchBar.text, searchText != "" else {
+            return
+        }
+
+        // Reset
+        resetSearchResults()
+
+        frazeItClient.fetchQuotesForKeyword(searchText, page: 1, completionHandler: {
+            error, result, quotes in
+            self.processSearchResults(error: error, result: result, quotes: quotes, isFirst: true)
+        })
+    }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("Cancel button was clicked")
         searchBar.resignFirstResponder()
     }
 }
 
-extension QuotesSearchViewController : UITableViewDelegate, UITableViewDataSource {
+extension QuoteSearchViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

@@ -24,14 +24,20 @@ struct QuoteSearchResult {
     let keyword : String
     let totalResults : Int
     var currentPage : Int
-    var availablePages : Int {
+    var availablePages : Int { // Max number of pages allowed by API provider is 10.
         get {
             return (totalResults / 9) < 10 ? (totalResults/9) : 10
         }
     }
+    var totalAccessibleResults: Int {
+        get {
+            if totalResults <= 90 { return totalResults } else { return 90 }
+        }
+    }
+    
     var hasMore : Bool {
         get {
-            return availablePages > 1 ? true : false
+            return availablePages > currentPage ? true : false
         }
     }
 

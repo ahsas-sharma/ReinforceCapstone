@@ -31,6 +31,11 @@ class FrazeItClient : NSObject {
 
             let searchResult = QuoteSearchResult(keyword: keyword, totalResults: result.total_results.int!, currentPage: page)
 
+            guard searchResult.totalResults != 0 else {
+
+                return
+            }
+
             guard let quotesArray = result.quote.all else {
                 debugPrint("Error : \(#function), \(#line)")
                 return
@@ -49,8 +54,26 @@ class FrazeItClient : NSObject {
 
 
     func constructUrl(query: String, page: Int) -> URL {
-        let urlString = Constants.FrazeIt.baseUrl + query + "/" + Constants.FrazeIt.lang + "/" + String(page) + "/" + Constants.FrazeIt.highlight + "/" + Constants.FrazeIt.apiKey
+
+        let escapedQuery = formatQueryString(queryString: query)
+        let urlString = Constants.FrazeIt.baseUrl + escapedQuery + "/" + Constants.FrazeIt.lang + "/" + String(page) + "/" + Constants.FrazeIt.highlight + "/" + Constants.FrazeIt.apiKey
+        print(escapedQuery)
         print(urlString)
         return URL(string:urlString)!
     }
+
+    func formatQueryString(queryString: String) -> String {
+        var query = queryString
+
+        // Remove double whitespaces and replace remaining with '+'
+        query = query.replacingOccurrences(of: "[\\s\n]+", with: " ", options: .regularExpression, range: nil)
+        query = query.replacingOccurrences(of: " ", with: "+")
+
+        // Apply a regex pattern
+        let pattern = "[^A-Za-z+]+"
+        query = query.replacingOccurrences(of: pattern, with: "", options: .regularExpression, range: nil)
+
+        return query
+    }
+
 }
