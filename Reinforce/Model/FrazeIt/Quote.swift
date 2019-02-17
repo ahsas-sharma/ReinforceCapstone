@@ -48,9 +48,10 @@ struct QuoteSearchResult {
     }
 }
 
-struct SearchManager {
+struct QuoteSearchManager {
     var isSearching : Bool
     var dataTask : URLSessionDataTask
+    var searchResult : QuoteSearchResult? = nil
 
     init(isSearching: Bool, dataTask: URLSessionDataTask) {
         self.isSearching = isSearching

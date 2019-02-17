@@ -67,6 +67,9 @@
 		FC7D168A2219356600335624 /* DesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D16892219356600335624 /* DesignViewController.swift */; };
 		FC7D168C221935FD00335624 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D168B221935FD00335624 /* TextViewController.swift */; };
 		FC7D168E2219395000335624 /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D168D2219395000335624 /* AttachmentViewController.swift */; };
+		FC7D1691221957B700335624 /* UnsplashClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1690221957B700335624 /* UnsplashClient.swift */; };
+		FC7D1693221958B600335624 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1692221958B600335624 /* Utility.swift */; };
+		FC7D16952219623B00335624 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D16942219623B00335624 /* Photo.swift */; };
 		FC854D96220D778B00E2FB51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D95220D778B00E2FB51 /* AppDelegate.swift */; };
 		FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D97220D778B00E2FB51 /* ViewController.swift */; };
 		FC854D9B220D778B00E2FB51 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC854D99220D778B00E2FB51 /* Main.storyboard */; };
@@ -181,6 +184,9 @@
 		FC7D16892219356600335624 /* DesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignViewController.swift; sourceTree = "<group>"; };
 		FC7D168B221935FD00335624 /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		FC7D168D2219395000335624 /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
+		FC7D1690221957B700335624 /* UnsplashClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashClient.swift; sourceTree = "<group>"; };
+		FC7D1692221958B600335624 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		FC7D16942219623B00335624 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		FC854D92220D778B00E2FB51 /* Reinforce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reinforce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC854D95220D778B00E2FB51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC854D97220D778B00E2FB51 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -468,6 +474,15 @@
 			path = FrazeIt;
 			sourceTree = "<group>";
 		};
+		FC7D168F2219579800335624 /* Unsplash */ = {
+			isa = PBXGroup;
+			children = (
+				FC7D1690221957B700335624 /* UnsplashClient.swift */,
+				FC7D16942219623B00335624 /* Photo.swift */,
+			);
+			path = Unsplash;
+			sourceTree = "<group>";
+		};
 		FC854D89220D778B00E2FB51 = {
 			isa = PBXGroup;
 			children = (
@@ -501,9 +516,11 @@
 		FC854DAA220D976E00E2FB51 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FC3C5D772217F20500B1E019 /* FrazeIt */,
+				FC7D168F2219579800335624 /* Unsplash */,
 				FC854D9C220D778B00E2FB51 /* Reinforce.xcdatamodeld */,
 				FC3C5D612217DD7900B1E019 /* Constants.swift */,
-				FC3C5D772217F20500B1E019 /* FrazeIt */,
+				FC7D1692221958B600335624 /* Utility.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -624,6 +641,7 @@
 			files = (
 				FC08DBC32216949100C96013 /* CLToneCurveTool.m in Sources */,
 				FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */,
+				FC7D16952219623B00335624 /* Photo.swift in Sources */,
 				FC08DBBA2216949100C96013 /* CLFilterTool.m in Sources */,
 				FC08DBE1221694A800C96013 /* CLPickerView.m in Sources */,
 				FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */,
@@ -631,6 +649,7 @@
 				FC7D168A2219356600335624 /* DesignViewController.swift in Sources */,
 				FC08DBCB2216949100C96013 /* CLImageEditorTheme.m in Sources */,
 				FC854D9E220D778B00E2FB51 /* Reinforce.xcdatamodeld in Sources */,
+				FC7D1691221957B700335624 /* UnsplashClient.swift in Sources */,
 				FC08DBE5221694A800C96013 /* CLPickerDrum.m in Sources */,
 				FC08DBB32216949100C96013 /* CLHighlightShadowEffect.m in Sources */,
 				FC08DBBF2216949100C96013 /* CLToolbarMenuItem.m in Sources */,
@@ -641,6 +660,7 @@
 				FC08DBAF2216949100C96013 /* CLPixellateEffect.m in Sources */,
 				FC7D168C221935FD00335624 /* TextViewController.swift in Sources */,
 				FC3C5D702217E7BD00B1E019 /* Element.swift in Sources */,
+				FC7D1693221958B600335624 /* Utility.swift in Sources */,
 				FC08DBAD2216949100C96013 /* CLClippingTool.m in Sources */,
 				FC08DBC92216949100C96013 /* UIDevice+SystemVersion.m in Sources */,
 				FC3C5D6E2217E7BD00B1E019 /* Error.swift in Sources */,

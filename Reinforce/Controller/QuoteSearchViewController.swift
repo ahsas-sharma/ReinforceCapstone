@@ -10,6 +10,7 @@ import UIKit
 
 class QuoteSearchViewController : UIViewController {
 
+    // MARK: - Properties and IBOutlets
     var searchResult : QuoteSearchResult?
     var quotes = [Quote]()
     let frazeItClient = FrazeItClient()
@@ -18,13 +19,15 @@ class QuoteSearchViewController : UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadMoreResultsButton: UIButton!
 
+
+    // MARK: - View Lifecyle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
-
     }
+
+    // MARK: - IBActions
 
     @IBAction func loadMoreResultsButtonTapped(_ sender: UIButton) {
         print("Load more results button tapped")
@@ -39,12 +42,13 @@ class QuoteSearchViewController : UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Helper
+
     func processSearchResults(error: Error?, result: QuoteSearchResult?, quotes: [Quote]?, isFirst: Bool) {
         guard error == nil, result != nil, quotes != nil else {
             return
         }
-        print("CurrentPage: \(String(describing: result?.currentPage)) Available Pages : \(result?.availablePages) AND hasMore: \(String(describing: result?.hasMore))")
-        print(result?.availablePages)
+        print("CurrentPage: \(String(describing: result?.currentPage)) Available Pages : \(String(describing: result?.availablePages)) AND hasMore: \(String(describing: result?.hasMore))")
 
         // If its a follow up request, increment the current page
         if isFirst {
@@ -72,6 +76,9 @@ class QuoteSearchViewController : UIViewController {
     }
 
 }
+
+// MARK: - UISearchBar
+
 extension QuoteSearchViewController : UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("Text Did End Editing")
@@ -98,6 +105,8 @@ extension QuoteSearchViewController : UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
+
+// MARK: - UITableView
 
 extension QuoteSearchViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

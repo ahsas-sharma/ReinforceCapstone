@@ -54,7 +54,6 @@ class FrazeItClient : NSObject {
 
 
     func constructUrl(query: String, page: Int) -> URL {
-
         let escapedQuery = formatQueryString(queryString: query)
         let urlString = Constants.FrazeIt.baseUrl + escapedQuery + "/" + Constants.FrazeIt.lang + "/" + String(page) + "/" + Constants.FrazeIt.highlight + "/" + Constants.FrazeIt.apiKey
         print(escapedQuery)
@@ -62,18 +61,5 @@ class FrazeItClient : NSObject {
         return URL(string:urlString)!
     }
 
-    func formatQueryString(queryString: String) -> String {
-        var query = queryString
-
-        // Remove double whitespaces and replace remaining with '+'
-        query = query.replacingOccurrences(of: "[\\s\n]+", with: " ", options: .regularExpression, range: nil)
-        query = query.replacingOccurrences(of: " ", with: "+")
-
-        // Apply a regex pattern
-        let pattern = "[^A-Za-z+]+"
-        query = query.replacingOccurrences(of: pattern, with: "", options: .regularExpression, range: nil)
-
-        return query
-    }
-
+   
 }
