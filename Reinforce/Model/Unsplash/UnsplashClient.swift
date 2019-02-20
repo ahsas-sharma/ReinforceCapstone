@@ -15,7 +15,7 @@ class UnsplashClient : NSObject {
     }
 
     func constructUrl(query: String, page: Int) -> URL {
-        let escapedQuery = formatQueryString(queryString: query)
+        let escapedQuery = formatQueryString(query)
         let urlString = Constants.Unsplash.baseUrl + Constants.Unsplash.clientIdKey + "=" + Constants.Unsplash.clientId + "&" + Constants.Unsplash.queryKey + "=" + query + "&" + Constants.Unsplash.pageKey + "=" + String(page) + "&" + Constants.Unsplash.perPageKey + "=" + Constants.Unsplash.perPage
         let url = URL(string: urlString)!
         print(escapedQuery)

@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Your camera is mine!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow to select a photo from your library to display in the notification.</string>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 //
-//  QuotesSearchViewController.swift
+//  PaperQuotesViewController.swift
 //  Reinforce
 //
 //  Created by Ahsas Sharma on 16/02/19.
@@ -8,17 +8,20 @@
 
 import UIKit
 
-class QuoteSearchViewController : UIViewController {
+class PaperQuotesViewController : UIViewController {
 
     // MARK: - Properties and IBOutlets
-    var searchResult : QuoteSearchResult?
     var quotes = [Quote]()
-    let frazeItClient = FrazeItClient()
+    var designViewController : DesignViewController!
+    var selectedQuote : Quote!
+
+    let paperQuotesClient = PaperQuotesClient()
+    var quoteSearchManager : QuoteSearchManager!
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadMoreResultsButton: UIButton!
-
+    
 
     // MARK: - View Lifecyle
     override func viewDidLoad() {
@@ -32,43 +35,25 @@ class QuoteSearchViewController : UIViewController {
     @IBAction func loadMoreResultsButtonTapped(_ sender: UIButton) {
         print("Load more results button tapped")
         self.loadMoreResultsButton.isEnabled = false
-        frazeItClient.fetchQuotesForKeyword((searchResult?.keyword)!, page: ((searchResult?.currentPage)! + 1), completionHandler: {
-            error, result, quotes in
-            self.processSearchResults(error: error, result: result, quotes: quotes, isFirst: false)
-        })
     }
 
-    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
+        updatePreviewUIWithQuote(selectedQuote)
         self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Helper
 
-    func processSearchResults(error: Error?, result: QuoteSearchResult?, quotes: [Quote]?, isFirst: Bool) {
-        guard error == nil, result != nil, quotes != nil else {
-            return
-        }
-        print("CurrentPage: \(String(describing: result?.currentPage)) Available Pages : \(String(describing: result?.availablePages)) AND hasMore: \(String(describing: result?.hasMore))")
-
-        // If its a follow up request, increment the current page
-        if isFirst {
-            self.searchResult = result
-        } else {
-            self.searchResult?.currentPage += 1
-        }
-
-        self.quotes.append(contentsOf: quotes!)
-
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            let resultsLeft = (self.searchResult?.totalAccessibleResults)! - ((self.searchResult?.currentPage)! * 9)
-            self.loadMoreResultsButton.setTitle("Load More Results (\(resultsLeft))", for: .normal)
-            (self.searchResult?.hasMore)! ? self.loadMoreResultsButton.isEnabled = true : ()
-        }
+    func updatePreviewUIWithQuote(_ quote: Quote) {
+        designViewController.bodyTextView.text = selectedQuote.text
+        designViewController.bodyTextView.textColor = .black
     }
 
     func resetSearchResults() {
-        searchResult = nil
         quotes.removeAll()
         loadMoreResultsButton.setTitle("Load More Results", for: .normal)
         loadMoreResultsButton.isEnabled = false
@@ -79,7 +64,7 @@ class QuoteSearchViewController : UIViewController {
 
 // MARK: - UISearchBar
 
-extension QuoteSearchViewController : UISearchBarDelegate {
+extension PaperQuotesViewController : UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("Text Did End Editing")
     }
@@ -93,11 +78,21 @@ extension QuoteSearchViewController : UISearchBarDelegate {
 
         // Reset
         resetSearchResults()
+        paperQuotesClient.fetchQuotesForKeyword(searchText, next: nil, completionHandler: {
+            error, searchManager, quotes  in
+            guard error == nil else {
+                print("Received an error")
+                return
+            }
 
-        frazeItClient.fetchQuotesForKeyword(searchText, page: 1, completionHandler: {
-            error, result, quotes in
-            self.processSearchResults(error: error, result: result, quotes: quotes, isFirst: true)
+            self.quoteSearchManager = searchManager
+            self.quotes = quotes!
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         })
+
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -108,7 +103,7 @@ extension QuoteSearchViewController : UISearchBarDelegate {
 
 // MARK: - UITableView
 
-extension QuoteSearchViewController : UITableViewDelegate, UITableViewDataSource {
+extension PaperQuotesViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -123,9 +118,14 @@ extension QuoteSearchViewController : UITableViewDelegate, UITableViewDataSource
         if !quotes.isEmpty {
             let quote = quotes[indexPath.row]
             cell.textLabel!.text = quote.text
-            cell.detailTextLabel!.text = quote.author!
+            cell.detailTextLabel!.text = quote.author
         }
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedQuote = quotes[indexPath.row]
+        designViewController.selectedQuote = selectedQuote
     }
 }
