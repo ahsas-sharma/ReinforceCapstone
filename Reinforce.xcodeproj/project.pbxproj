@@ -53,9 +53,12 @@
 		FC08DBE8221694CA00C96013 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBE7221694C900C96013 /* Accelerate.framework */; };
 		FC08DBEA221694D300C96013 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBE9221694D300C96013 /* CoreGraphics.framework */; };
 		FC08DBEC221694D900C96013 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBEB221694D900C96013 /* CoreImage.framework */; };
+		FC246FBD221E753700D630C1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FBC221E753700D630C1 /* DataController.swift */; };
+		FC246FBF221FF66900D630C1 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */; };
 		FC34A489221CE79D00114349 /* PaperQuotesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A488221CE79D00114349 /* PaperQuotesClient.swift */; };
 		FC34A48E221D318900114349 /* UnsplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A48D221D318900114349 /* UnsplashViewController.swift */; };
 		FC34A490221D3C9000114349 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */; };
+		FC34A499221E6D9700114349 /* RepeatStartTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A498221E6D9700114349 /* RepeatStartTimeTableViewCell.swift */; };
 		FC3C5D622217DD7900B1E019 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D612217DD7900B1E019 /* Constants.swift */; };
 		FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D752217F03B00B1E019 /* Quote.swift */; };
 		FC70A89622180EF90072C315 /* PaperQuotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */; };
@@ -65,7 +68,7 @@
 		FC7D1693221958B600335624 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1692221958B600335624 /* Utility.swift */; };
 		FC7D16952219623B00335624 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D16942219623B00335624 /* Photo.swift */; };
 		FC854D96220D778B00E2FB51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D95220D778B00E2FB51 /* AppDelegate.swift */; };
-		FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D97220D778B00E2FB51 /* ViewController.swift */; };
+		FC854D98220D778B00E2FB51 /* CLImageEditorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D97220D778B00E2FB51 /* CLImageEditorExample.swift */; };
 		FC854D9B220D778B00E2FB51 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC854D99220D778B00E2FB51 /* Main.storyboard */; };
 		FC854D9E220D778B00E2FB51 /* Reinforce.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC854D9C220D778B00E2FB51 /* Reinforce.xcdatamodeld */; };
 		FC854DA0220D778D00E2FB51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC854D9F220D778D00E2FB51 /* Assets.xcassets */; };
@@ -163,9 +166,12 @@
 		FC08DBE7221694C900C96013 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		FC08DBE9221694D300C96013 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FC08DBEB221694D900C96013 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		FC246FBC221E753700D630C1 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		FC34A488221CE79D00114349 /* PaperQuotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperQuotesClient.swift; sourceTree = "<group>"; };
 		FC34A48D221D318900114349 /* UnsplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashViewController.swift; sourceTree = "<group>"; };
 		FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		FC34A498221E6D9700114349 /* RepeatStartTimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatStartTimeTableViewCell.swift; sourceTree = "<group>"; };
 		FC3C5D612217DD7900B1E019 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FC3C5D752217F03B00B1E019 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperQuotesViewController.swift; sourceTree = "<group>"; };
@@ -176,7 +182,7 @@
 		FC7D16942219623B00335624 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		FC854D92220D778B00E2FB51 /* Reinforce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reinforce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC854D95220D778B00E2FB51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FC854D97220D778B00E2FB51 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FC854D97220D778B00E2FB51 /* CLImageEditorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageEditorExample.swift; sourceTree = "<group>"; };
 		FC854D9A220D778B00E2FB51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC854D9D220D778B00E2FB51 /* Reinforce.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reinforce.xcdatamodel; sourceTree = "<group>"; };
 		FC854D9F220D778D00E2FB51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -493,6 +499,7 @@
 				FC854D9C220D778B00E2FB51 /* Reinforce.xcdatamodeld */,
 				FC3C5D612217DD7900B1E019 /* Constants.swift */,
 				FC7D1692221958B600335624 /* Utility.swift */,
+				FC246FBC221E753700D630C1 /* DataController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -500,7 +507,7 @@
 		FC854DAB220D978000E2FB51 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FC854D97220D778B00E2FB51 /* ViewController.swift */,
+				FC854D97220D778B00E2FB51 /* CLImageEditorExample.swift */,
 				FC08DB572216767A00C96013 /* HomeTableViewController.swift */,
 				FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */,
 				FC7D16892219356600335624 /* DesignViewController.swift */,
@@ -514,6 +521,8 @@
 		FC854DAC220D978F00E2FB51 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FC34A498221E6D9700114349 /* RepeatStartTimeTableViewCell.swift */,
+				FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -611,7 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC08DBC32216949100C96013 /* CLToneCurveTool.m in Sources */,
-				FC854D98220D778B00E2FB51 /* ViewController.swift in Sources */,
+				FC854D98220D778B00E2FB51 /* CLImageEditorExample.swift in Sources */,
 				FC7D16952219623B00335624 /* Photo.swift in Sources */,
 				FC08DBBA2216949100C96013 /* CLFilterTool.m in Sources */,
 				FC08DBE1221694A800C96013 /* CLPickerView.m in Sources */,
@@ -623,12 +632,15 @@
 				FC7D1691221957B700335624 /* UnsplashClient.swift in Sources */,
 				FC08DBE5221694A800C96013 /* CLPickerDrum.m in Sources */,
 				FC08DBB32216949100C96013 /* CLHighlightShadowEffect.m in Sources */,
+				FC246FBF221FF66900D630C1 /* HomeTableViewCell.swift in Sources */,
+				FC246FBD221E753700D630C1 /* DataController.swift in Sources */,
 				FC08DBBF2216949100C96013 /* CLToolbarMenuItem.m in Sources */,
 				FC08DBC62216949100C96013 /* CLClassList.m in Sources */,
 				FC08DBB82216949100C96013 /* CLImageToolBase.m in Sources */,
 				FC08DBBC2216949100C96013 /* CLDrawTool.m in Sources */,
 				FC08DBCA2216949100C96013 /* CLSplineInterpolator.m in Sources */,
 				FC08DBAF2216949100C96013 /* CLPixellateEffect.m in Sources */,
+				FC34A499221E6D9700114349 /* RepeatStartTimeTableViewCell.swift in Sources */,
 				FC7D1693221958B600335624 /* Utility.swift in Sources */,
 				FC08DBAD2216949100C96013 /* CLClippingTool.m in Sources */,
 				FC08DBC92216949100C96013 /* UIDevice+SystemVersion.m in Sources */,

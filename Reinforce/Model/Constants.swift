@@ -19,6 +19,10 @@ struct Constants {
         static let photoSearchSegue = "PhotoSearchSegue"
         static let paperQuotesViewController = "PaperQuotesViewController"
         static let unsplashViewController = "UnsplashViewController"
+
+        struct Cells {
+            static let homeTableViewCell = "HomeTableViewCell"
+        }
     }
 
     // MARK: - TextView -

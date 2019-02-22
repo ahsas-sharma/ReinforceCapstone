@@ -7,44 +7,78 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+
+    var dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
+    var fetchedResultsController : NSFetchedResultsController<Reminder>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 250
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
 
+        configureFetchedResultsControllerAndFetch()
+        
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
+    fileprivate func configureFetchedResultsControllerAndFetch() {
+        let fetchRequest : NSFetchRequest<Reminder> = Reminder.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending : false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Error while trying to perform fetch")
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        guard let count = fetchedResultsController.fetchedObjects?.count else {
+            return 0
+        }
+        return count
     }
 
-    /*
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.Identifiers.Cells.homeTableViewCell, for: indexPath) as! HomeTableViewCell
+        if fetchedResultsController.hasObject(at: indexPath) {
+            let reminder = fetchedResultsController.object(at: indexPath)
+            cell.reminder = reminder
+        }
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -120,5 +154,31 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         let ac = UIAlertController(title: "Button tapped!", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Hurray", style: .default))
         present(ac, animated: true)
+    }
+}
+
+
+extension HomeTableViewController : NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+}
+
+extension NSFetchedResultsController{
+    /// Check whether provided indexPath is valid.
+    @objc public func hasObject(at indexPath : IndexPath) -> Bool{
+        guard let sections = self.sections, sections.count > indexPath.section else {
+            return false
+        }
+        let sectionInfo = sections[indexPath.section]
+        guard sectionInfo.numberOfObjects > indexPath.row else {
+            return false
+        }
+        return true
     }
 }

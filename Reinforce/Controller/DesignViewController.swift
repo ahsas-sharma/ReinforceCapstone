@@ -18,6 +18,9 @@ class DesignViewController : UIViewController {
 
     var selectedQuote : Quote!
     var lastQuoteSearchString : String?
+    let dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
+
+    var reminder: Reminder!
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -39,13 +42,40 @@ class DesignViewController : UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: - Segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "QuoteSearchSegue" {
-            let quoteSearchVC = segue.destination as! PaperQuotesViewController
-            quoteSearchVC.designViewController = self
+
+    // MARK: - IBActions
+
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+
+
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        print("Notification title : \(String(describing: titleTextView.text))")
+        print("Notification body : \(String(describing: bodyTextView.text))")
+        print("Image: \(String(describing: attachmentImageView.image?.description))")
+
+        let newReminder = Reminder(context: dataController.backgroundContext)
+        newReminder.title = titleTextView.text
+        newReminder.body = bodyTextView.text
+        newReminder.image = attachmentImageView.image?.pngData()
+        newReminder.createdAt = Date()
+        self.reminder = newReminder
+
+        do {
+            try dataController.backgroundContext.save()
+        } catch {
+            fatalError("Error saving background context")
         }
 
+        performSegue(withIdentifier: "NotificationScreenSegue", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NotificationScreenSegue" {
+            let notificationVC = segue.destination as! NotificationsTableViewController
+            notificationVC.reminder = self.reminder
+        }
     }
 
     @IBAction func searchQuotesButtonTapped(_ sender: UIButton) {
