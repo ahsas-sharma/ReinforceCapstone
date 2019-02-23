@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreData
 
 
 public func formatQueryString(_ queryString: String) -> String {
@@ -15,7 +15,7 @@ public func formatQueryString(_ queryString: String) -> String {
 
     // Remove double whitespaces and replace remaining with '+'
     query = query.replacingOccurrences(of: "[\\s\n]+", with: " ", options: .regularExpression, range: nil)
-    query = query.replacingOccurrences(of: " ", with: "&")
+    query = query.replacingOccurrences(of: " ", with: "+")
 
     // Apply a regex pattern
     let pattern = "[^A-Za-z+]+"
@@ -48,3 +48,19 @@ extension UIButton {
     }
 
 }
+
+
+extension NSFetchedResultsController {
+    /// Check whether provided indexPath is valid.
+    @objc public func hasObject(at indexPath : IndexPath) -> Bool{
+        guard let sections = self.sections, sections.count > indexPath.section else {
+            return false
+        }
+        let sectionInfo = sections[indexPath.section]
+        guard sectionInfo.numberOfObjects > indexPath.row else {
+            return false
+        }
+        return true
+    }
+}
+

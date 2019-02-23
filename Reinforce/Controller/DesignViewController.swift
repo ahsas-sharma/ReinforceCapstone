@@ -16,6 +16,9 @@ class DesignViewController : UIViewController {
     @IBOutlet weak var titleTextView: UITextView!
     @IBOutlet weak var bodyTextView: UITextView!
 
+    @IBOutlet var actionButtons: [UIButton]!
+
+
     var selectedQuote : Quote!
     var lastQuoteSearchString : String?
     let dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
@@ -28,6 +31,13 @@ class DesignViewController : UIViewController {
 
         notificationVisualEffectsView.layer.cornerRadius = 10
         notificationVisualEffectsView.clipsToBounds = true
+
+        for button in actionButtons {
+            button.layer.cornerRadius = 10.0
+            button.clipsToBounds = true
+            button.layer.borderWidth = 0.5
+            button.layer.borderColor = UIColor.lightGray.cgColor
+        }
 
         // Add observers for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -78,26 +88,25 @@ class DesignViewController : UIViewController {
         }
     }
 
-    @IBAction func searchQuotesButtonTapped(_ sender: UIButton) {
+    @IBAction func searchPaperQuotesButtonTapped(_ sender: UIButton) {
         let paperQuotesVC = storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.paperQuotesViewController) as! PaperQuotesViewController
         paperQuotesVC.designViewController = self
         self.present(paperQuotesVC, animated: true)
     }
 
-    @IBAction func editAttachmentButtonTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Choose a photo", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Search Unsplash", style: .default, handler: {_ in
-            let unsplashVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.unsplashViewController) as! UnsplashViewController
-            self.present(unsplashVC, animated: true)
-        }))
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-            self.pickAnImageFrom(.camera)
-        }))
-        alert.addAction(UIAlertAction(title:"Photo Library", style: .default, handler: {_ in
-            self.pickAnImageFrom(.photoLibrary)
-        }))
+    @IBAction func searchUnsplashButtonTapped(_ sender: UIButton){
+        let unsplashVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.unsplashNavigationController)
+        self.present(unsplashVC!, animated: true)
+    }
 
-        self.present(alert, animated: true)
+
+    @IBAction func takePhotoButtonTapped(_ sender: Any) {
+        self.pickAnImageFrom(.camera)
+    }
+
+    @IBAction func photoLibraryButtonTapped(_ sender: Any) {
+        self.pickAnImageFrom(.photoLibrary)
+
     }
 
     /// Presents an imagePickerController based on the source type

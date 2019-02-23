@@ -55,6 +55,8 @@
 		FC08DBEC221694D900C96013 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC08DBEB221694D900C96013 /* CoreImage.framework */; };
 		FC246FBD221E753700D630C1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FBC221E753700D630C1 /* DataController.swift */; };
 		FC246FBF221FF66900D630C1 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */; };
+		FC246FC12221151500D630C1 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FC02221151500D630C1 /* PhotoCollectionViewCell.swift */; };
+		FC246FC322212DF200D630C1 /* UnsplashPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC246FC222212DF200D630C1 /* UnsplashPhotoViewController.swift */; };
 		FC34A489221CE79D00114349 /* PaperQuotesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A488221CE79D00114349 /* PaperQuotesClient.swift */; };
 		FC34A48E221D318900114349 /* UnsplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A48D221D318900114349 /* UnsplashViewController.swift */; };
 		FC34A490221D3C9000114349 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */; };
@@ -168,6 +170,8 @@
 		FC08DBEB221694D900C96013 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		FC246FBC221E753700D630C1 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		FC246FC02221151500D630C1 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		FC246FC222212DF200D630C1 /* UnsplashPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashPhotoViewController.swift; sourceTree = "<group>"; };
 		FC34A488221CE79D00114349 /* PaperQuotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperQuotesClient.swift; sourceTree = "<group>"; };
 		FC34A48D221D318900114349 /* UnsplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashViewController.swift; sourceTree = "<group>"; };
 		FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
@@ -514,6 +518,7 @@
 				FC7D168D2219395000335624 /* AttachmentViewController.swift */,
 				FC34A48D221D318900114349 /* UnsplashViewController.swift */,
 				FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */,
+				FC246FC222212DF200D630C1 /* UnsplashPhotoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 			children = (
 				FC34A498221E6D9700114349 /* RepeatStartTimeTableViewCell.swift */,
 				FC246FBE221FF66900D630C1 /* HomeTableViewCell.swift */,
+				FC246FC02221151500D630C1 /* PhotoCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -641,6 +647,7 @@
 				FC08DBCA2216949100C96013 /* CLSplineInterpolator.m in Sources */,
 				FC08DBAF2216949100C96013 /* CLPixellateEffect.m in Sources */,
 				FC34A499221E6D9700114349 /* RepeatStartTimeTableViewCell.swift in Sources */,
+				FC246FC322212DF200D630C1 /* UnsplashPhotoViewController.swift in Sources */,
 				FC7D1693221958B600335624 /* Utility.swift in Sources */,
 				FC08DBAD2216949100C96013 /* CLClippingTool.m in Sources */,
 				FC08DBC92216949100C96013 /* UIDevice+SystemVersion.m in Sources */,
@@ -660,6 +667,7 @@
 				FC08DBC52216949100C96013 /* CLImageToolInfo.m in Sources */,
 				FC08DBC82216949100C96013 /* UIView+Frame.m in Sources */,
 				FC3C5D622217DD7900B1E019 /* Constants.swift in Sources */,
+				FC246FC12221151500D630C1 /* PhotoCollectionViewCell.swift in Sources */,
 				FC08DBE4221694A800C96013 /* CLTextLabel.m in Sources */,
 				FC08DBB52216949100C96013 /* CLEffectBase.m in Sources */,
 				FC08DBB02216949100C96013 /* CLBloomEffect.m in Sources */,

@@ -14,6 +14,7 @@ class DataController {
         return persistantContainer.viewContext
     }
     var backgroundContext : NSManagedObjectContext!
+    var unsplashContext : NSManagedObjectContext!
 
     init(modelName : String) {
         persistantContainer = NSPersistentContainer(name: modelName)
@@ -21,6 +22,7 @@ class DataController {
 
     func configureContexts() {
         backgroundContext = persistantContainer.newBackgroundContext()
+        unsplashContext = persistantContainer.newBackgroundContext()
 
         viewContext.automaticallyMergesChangesFromParent = true
         backgroundContext.automaticallyMergesChangesFromParent = true
@@ -39,5 +41,31 @@ class DataController {
             completion?()
         })
 
+    }
+
+    // Unsplash
+    func deleteAllPhotos() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+        fetchRequest.returnsObjectsAsFaults = false
+        do
+        {
+            let results = try unsplashContext.fetch(fetchRequest)
+            for managedObject in results
+            {
+                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+                unsplashContext.delete(managedObjectData)
+            }
+            print("Deleted all photos")
+        } catch let error as NSError {
+            print("Error while deleting data:\(error)")
+        }
+    }
+
+    func saveUnsplashContext() {
+        do {
+            try self.unsplashContext.save()
+        } catch {
+            fatalError("Error while trying to save unsplash context")
+        }
     }
 }

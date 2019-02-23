@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Photo {
+struct PhotoSS {
     let thumbUrl : String
     var thumbImage : UIImage? = nil
     let fullUrl : String

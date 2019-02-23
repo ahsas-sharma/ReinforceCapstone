@@ -35,6 +35,24 @@ class PaperQuotesViewController : UIViewController {
     @IBAction func loadMoreResultsButtonTapped(_ sender: UIButton) {
         print("Load more results button tapped")
         self.loadMoreResultsButton.isEnabled = false
+        paperQuotesClient.fetchMoreQuotes(using: quoteSearchManager, completionHandler: {
+            error, nextUrlString, newQuotes in
+            guard error == nil else {
+                print("There was an error with your request: \(String(describing: error))")
+                return
+            }
+            self.quoteSearchManager.nextUrl = nextUrlString
+            let lastRow = self.quotes.count
+            self.quotes += newQuotes!
+            print("NewQuotes Count: \(newQuotes!.count)")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: lastRow, section: 0), at: .middle, animated: true)
+                if nextUrlString != nil {
+                    self.loadMoreResultsButton.isEnabled = true
+                }
+            }
+        })
     }
 
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
@@ -51,6 +69,7 @@ class PaperQuotesViewController : UIViewController {
     func updatePreviewUIWithQuote(_ quote: Quote) {
         designViewController.bodyTextView.text = selectedQuote.text
         designViewController.bodyTextView.textColor = .black
+        designViewController.titleTextView.text = "Quote by \(selectedQuote.author)"
     }
 
     func resetSearchResults() {
@@ -78,7 +97,7 @@ extension PaperQuotesViewController : UISearchBarDelegate {
 
         // Reset
         resetSearchResults()
-        paperQuotesClient.fetchQuotesForKeyword(searchText, next: nil, completionHandler: {
+        paperQuotesClient.fetchQuotesForTags(searchText, completionHandler: {
             error, searchManager, quotes  in
             guard error == nil else {
                 print("Received an error")
@@ -90,6 +109,10 @@ extension PaperQuotesViewController : UISearchBarDelegate {
 
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                // If nextUrl is available, enable the load more results button
+                if self.quoteSearchManager.nextUrl != nil {
+                    self.loadMoreResultsButton.isEnabled = true
+                }
             }
         })
 

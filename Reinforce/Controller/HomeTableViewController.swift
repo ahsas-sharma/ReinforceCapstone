@@ -62,7 +62,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         guard let count = fetchedResultsController.fetchedObjects?.count else {
             return 0
         }
@@ -129,13 +128,13 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     // MARK: - DZNEmptyDataSet
 
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Welcome"
+        let str = "Reinforce"
         let attrs = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
         return NSAttributedString(string: str, attributes: attrs)
     }
 
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Tap the button below to add your first grokkleglob."
+        let str = "Create beautiful personalized reminders with quotes, images and custom notifications."
         let attrs = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
         return NSAttributedString(string: str, attributes: attrs)
     }
@@ -145,13 +144,13 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
-        let str = "Add Grokkleglob"
+        let str = "Add a new reminder"
         let attrs = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout)]
         return NSAttributedString(string: str, attributes: attrs)
     }
 
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-        let ac = UIAlertController(title: "Button tapped!", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "This is not the right place!", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Hurray", style: .default))
         present(ac, animated: true)
     }
@@ -166,19 +165,5 @@ extension HomeTableViewController : NSFetchedResultsControllerDelegate {
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-    }
-}
-
-extension NSFetchedResultsController{
-    /// Check whether provided indexPath is valid.
-    @objc public func hasObject(at indexPath : IndexPath) -> Bool{
-        guard let sections = self.sections, sections.count > indexPath.section else {
-            return false
-        }
-        let sectionInfo = sections[indexPath.section]
-        guard sectionInfo.numberOfObjects > indexPath.row else {
-            return false
-        }
-        return true
     }
 }

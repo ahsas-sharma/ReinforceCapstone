@@ -19,14 +19,12 @@ struct Quote {
 }
 
 struct QuoteSearchManager {
-    var isSearching : Bool
-    var currentDataTask : URLSessionDataTask
+    var currentDataTask : URLSessionDataTask?
     var nextUrl : String?
     var totalResults : Int
     var resultsLeft : Int?
 
-    init(isSearching: Bool, currentDataTask: URLSessionDataTask, nextUrl: String?, totalResults: Int) {
-        self.isSearching = isSearching
+    init(currentDataTask: URLSessionDataTask, nextUrl: String?, totalResults: Int) {
         self.currentDataTask = currentDataTask
         self.nextUrl = nextUrl
         self.totalResults = totalResults

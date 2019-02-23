@@ -17,11 +17,15 @@ struct Constants {
     struct Identifiers {
         static let quotesSearchSegue = "QuoteSearchSegue"
         static let photoSearchSegue = "PhotoSearchSegue"
+        static let unsplashPhotoViewerSegue = "UnsplashPhotoViewerSegue"
         static let paperQuotesViewController = "PaperQuotesViewController"
+        static let unsplashNavigationController = "UnsplashNavigationController"
         static let unsplashViewController = "UnsplashViewController"
+        static let unsplashPhotoViewController = "UnsplashPhotoViewController"
 
         struct Cells {
             static let homeTableViewCell = "HomeTableViewCell"
+            static let photoCollectionViewCell = "PhotoCollectionViewCell"
         }
     }
 
@@ -74,5 +78,18 @@ struct Constants {
         // Parameter Values
         static let clientId = "8347e7035be3d91402b253f0939b4421b17ba137785390e7152f3ad67645a8a7"
         static let perPage = "30"
+
+        // Response Keys
+        static let nextUrlKey = ""
+        static let resultsKey = "results"
+        static let urlsKey = "urls"
+        static let thumbUrlKey = "thumb"
+        static let fullUrlKey = "full"
+        static let userKey = "user"
+        static let usernameKey = "username"
+        static let profileImageKey = "profile_image"
+        static let largeProfileImageKey = "large"
+        static let nameKey = "name"
+
     }
 }
