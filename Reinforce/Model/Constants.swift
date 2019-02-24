@@ -15,9 +15,11 @@ struct Constants {
 
     // MARK: - Identifiers -
     struct Identifiers {
-        static let quotesSearchSegue = "QuoteSearchSegue"
-        static let photoSearchSegue = "PhotoSearchSegue"
+        static let newDesignSegue = "NewDesignSegue"
         static let unsplashPhotoViewerSegue = "UnsplashPhotoViewerSegue"
+        static let unsplashNavigationControllerSegue = "UnsplashNavigationControllerSegue"
+        static let paperQuotesSegue = "PaperQuotesSegue"
+        static let notificationScreenSegue = "NotificationScreenSegue"
         static let paperQuotesViewController = "PaperQuotesViewController"
         static let unsplashNavigationController = "UnsplashNavigationController"
         static let unsplashViewController = "UnsplashViewController"
@@ -84,12 +86,23 @@ struct Constants {
         static let resultsKey = "results"
         static let urlsKey = "urls"
         static let thumbUrlKey = "thumb"
-        static let fullUrlKey = "full"
+        static let fullUrlKey = "regular" // this is actually the regularUrlKey. Refactor key and model attributes later.
         static let userKey = "user"
         static let usernameKey = "username"
         static let profileImageKey = "profile_image"
         static let largeProfileImageKey = "large"
         static let nameKey = "name"
 
+    }
+
+    // MARK: - Errors -
+    struct Errors {
+        static let noPhotosFound = NSError(domain: "No photos found", code: 404, userInfo: [NSLocalizedDescriptionKey:"Could not find any photos for the given keywords."])
+        static let noQuotesFound = NSError(domain: "No quotes found", code: 404, userInfo: [NSLocalizedDescriptionKey:"Could not find any quotes for the given tags."])
+        static let noNetwork = NSError(domain: "No internet access", code: 1, userInfo: [NSLocalizedDescriptionKey:"Please make sure you're connected to a network and try again."])
+        static let database = NSError(domain: "Database error", code: 2, userInfo: [NSLocalizedDescriptionKey:"Well this is just embarrassing. Please contact the developer."])
+        static let unsplash = NSError(domain: "Invalid response from Unsplash API", code: 3, userInfo: [NSLocalizedDescriptionKey:"Please try again. If the problem persists, contact the developer."])
+        static let paperQuotes = NSError(domain: "Invalid response from PaperQuotes API", code: 3, userInfo: [NSLocalizedDescriptionKey:"Please try again. If the problem persists, contact the developer."])
+        static let networkErrorCodes = [1001, 1004, 1005, 1006, 1009, 1018, 1019, 999, 53, -1009]
     }
 }

@@ -21,15 +21,28 @@ class PaperQuotesClient : NSObject {
         var request = URLRequest(url: url)
         request.setValue(Constants.PaperQuotes.authHeaderVal, forHTTPHeaderField: Constants.PaperQuotes.authHeaderKey)
 
+        // If no connection is available, fail immediately.
+        URLSession.shared.configuration.waitsForConnectivity = false
+
         currentTask = URLSession.shared.dataTask(with: request) {
             data, response, error in
+
             guard error == nil else {
-                debugPrint("Error : \(#function), \(#line)")
+                if let error = error as NSError?, Constants.Errors.networkErrorCodes.contains(error.code) {
+                    completionHandler(Constants.Errors.noNetwork, nil, nil)
+                } else {
+                    completionHandler(error as NSError?, nil, nil)
+                }
                 return
             }
 
             guard data != nil else {
                 debugPrint("Error : \(#function), \(#line)")
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                debugPrint("Received a status code other than 200.")
                 return
             }
 
@@ -50,8 +63,14 @@ class PaperQuotesClient : NSObject {
                 return
             }
 
-            guard let resultsArray = parsedResult?["results"] as? [[String: AnyObject]], resultsArray.count != 0 else {
-                print("No results found")
+            guard let resultsArray = parsedResult?["results"] as? [[String: AnyObject]] else {
+                print("Could not find results array")
+                return
+            }
+
+            guard resultsArray.count != 0 else {
+                completionHandler(Constants.Errors.noQuotesFound, nil, nil)
+                print("No quotes found for user tag.")
                 return
             }
 
@@ -92,7 +111,11 @@ class PaperQuotesClient : NSObject {
         currentTask = URLSession.shared.dataTask(with: request) {
             data, response, error in
             guard error == nil else {
-                debugPrint("Error : \(#function), \(#line)")
+                if let error = error as NSError?, Constants.Errors.networkErrorCodes.contains(error.code) {
+                    completionHandler(Constants.Errors.noNetwork, nil, nil)
+                } else {
+                    completionHandler(error as NSError?, nil, nil)
+                }
                 return
             }
 
@@ -113,8 +136,14 @@ class PaperQuotesClient : NSObject {
                 nextString = nextUrlString
             } else { nextString = nil}
 
-            guard let resultsArray = parsedResult?["results"] as? [[String: AnyObject]], resultsArray.count != 0 else {
+            guard let resultsArray = parsedResult?["results"] as? [[String: AnyObject]] else {
                 print("No results found")
+                return
+            }
+
+            guard resultsArray.count != 0 else {
+                completionHandler(Constants.Errors.noQuotesFound, nil, nil)
+                print("No quotes found for user tag.")
                 return
             }
 

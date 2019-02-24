@@ -21,13 +21,19 @@ class PaperQuotesViewController : UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadMoreResultsButton: UIButton!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var noResultsView: UIView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+
 
     // MARK: - View Lifecyle
     override func viewDidLoad() {
         super.viewDidLoad()
+        noResultsView.isHidden = true
+        doneButton.isEnabled = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
+        self.activityIndicator.stopAnimating()
     }
 
     // MARK: - IBActions
@@ -35,10 +41,11 @@ class PaperQuotesViewController : UIViewController {
     @IBAction func loadMoreResultsButtonTapped(_ sender: UIButton) {
         print("Load more results button tapped")
         self.loadMoreResultsButton.isEnabled = false
+        self.activityIndicator.startAnimating()
         paperQuotesClient.fetchMoreQuotes(using: quoteSearchManager, completionHandler: {
             error, nextUrlString, newQuotes in
             guard error == nil else {
-                print("There was an error with your request: \(String(describing: error))")
+                print("There was an error : \(String(describing: error))")
                 return
             }
             self.quoteSearchManager.nextUrl = nextUrlString
@@ -46,6 +53,7 @@ class PaperQuotesViewController : UIViewController {
             self.quotes += newQuotes!
             print("NewQuotes Count: \(newQuotes!.count)")
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
                 self.tableView.scrollToRow(at: IndexPath(row: lastRow, section: 0), at: .middle, animated: true)
                 if nextUrlString != nil {
@@ -76,8 +84,36 @@ class PaperQuotesViewController : UIViewController {
         quotes.removeAll()
         loadMoreResultsButton.setTitle("Load More Results", for: .normal)
         loadMoreResultsButton.isEnabled = false
+        self.noResultsView.isHidden = true
         tableView.reloadData()
     }
+
+    /// Receives an error object and handles UI feedback accordingly
+    private func handleError(_ error: NSError) {
+        DispatchQueue.main.async {
+            switch error {
+            case Constants.Errors.noQuotesFound:
+                self.doneButton.isEnabled = false
+                self.noResultsView.isHidden = false
+                self.activityIndicator.stopAnimating()
+            default: self.showAlertFor(error: error)
+            }
+        }
+    }
+
+    /// Displays an alert to the user with details about the error
+    fileprivate func showAlertFor(error: NSError) {
+        var err = error
+        if Constants.Errors.networkErrorCodes.contains(error.code) {
+            err = Constants.Errors.noNetwork
+        }
+        let alertController = UIAlertController(title: err.domain, message: err.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: { action in
+            alertController.dismiss(animated: true, completion:{})
+        })
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion:nil)
+        }
 
 }
 
@@ -90,17 +126,17 @@ extension PaperQuotesViewController : UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
         guard let searchText = searchBar.text, searchText != "" else {
             return
         }
 
         // Reset
         resetSearchResults()
+        self.activityIndicator.startAnimating()
         paperQuotesClient.fetchQuotesForTags(searchText, completionHandler: {
             error, searchManager, quotes  in
             guard error == nil else {
-                print("Received an error")
+                self.handleError(error!)
                 return
             }
 
@@ -108,6 +144,8 @@ extension PaperQuotesViewController : UISearchBarDelegate {
             self.quotes = quotes!
 
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.doneButton.isEnabled = true
                 self.tableView.reloadData()
                 // If nextUrl is available, enable the load more results button
                 if self.quoteSearchManager.nextUrl != nil {

@@ -24,20 +24,14 @@ class DesignViewController : UIViewController {
     let dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
 
     var reminder: Reminder!
+    // to store view's y origin based on nav bar
+    var baseHeight: Float!
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        notificationVisualEffectsView.layer.cornerRadius = 10
-        notificationVisualEffectsView.clipsToBounds = true
-
-        for button in actionButtons {
-            button.layer.cornerRadius = 10.0
-            button.clipsToBounds = true
-            button.layer.borderWidth = 0.5
-            button.layer.borderColor = UIColor.lightGray.cgColor
-        }
+        applyStyleToUIElements()
 
         // Add observers for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -46,12 +40,14 @@ class DesignViewController : UIViewController {
         // Set default text
         titleTextView.text = Constants.TextView.defaultTitleText
         bodyTextView.text = Constants.TextView.defaultBodyText
+
+        // Setup blank reminder
+        reminder = Reminder(context: dataController.backgroundContext)
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
 
     // MARK: - IBActions
 
@@ -61,30 +57,21 @@ class DesignViewController : UIViewController {
 
 
     @IBAction func nextButtonTapped(_ sender: Any) {
-        print("Notification title : \(String(describing: titleTextView.text))")
-        print("Notification body : \(String(describing: bodyTextView.text))")
-        print("Image: \(String(describing: attachmentImageView.image?.description))")
-
-        let newReminder = Reminder(context: dataController.backgroundContext)
-        newReminder.title = titleTextView.text
-        newReminder.body = bodyTextView.text
-        newReminder.image = attachmentImageView.image?.pngData()
-        newReminder.createdAt = Date()
-        self.reminder = newReminder
-
-        do {
-            try dataController.backgroundContext.save()
-        } catch {
-            fatalError("Error saving background context")
-        }
-
-        performSegue(withIdentifier: "NotificationScreenSegue", sender: self)
+        // do what needs to be done
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NotificationScreenSegue" {
+        if segue.identifier == Constants.Identifiers.notificationScreenSegue {
             let notificationVC = segue.destination as! NotificationsTableViewController
+            prepareReminderObject()
             notificationVC.reminder = self.reminder
+        }
+
+        if segue.identifier == Constants.Identifiers.unsplashNavigationControllerSegue {
+            let unsplashNavVC = segue.destination as! UINavigationController
+            if let unsplashVC = unsplashNavVC.topViewController as? UnsplashViewController {
+                unsplashVC.designViewController = self
+            }
         }
     }
 
@@ -95,8 +82,7 @@ class DesignViewController : UIViewController {
     }
 
     @IBAction func searchUnsplashButtonTapped(_ sender: UIButton){
-        let unsplashVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.unsplashNavigationController)
-        self.present(unsplashVC!, animated: true)
+        // anything?
     }
 
 
@@ -109,8 +95,19 @@ class DesignViewController : UIViewController {
 
     }
 
+
+
+    // MARK: - Helper
+
+    fileprivate func prepareReminderObject() {
+        reminder.title = titleTextView.text
+        reminder.body = bodyTextView.text
+        reminder.image = attachmentImageView.image?.jpegData(compressionQuality: 0.50)
+        reminder.createdAt = Date()
+    }
+
     /// Presents an imagePickerController based on the source type
-    func pickAnImageFrom(_ source: UIImagePickerController.SourceType) {
+    fileprivate func pickAnImageFrom(_ source: UIImagePickerController.SourceType) {
 
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -120,6 +117,19 @@ class DesignViewController : UIViewController {
         imagePicker.modalPresentationStyle = .overCurrentContext
 
         self.present(imagePicker, animated: true)
+    }
+
+    /// Performs initial styling of various UI elements
+    private func applyStyleToUIElements() {
+        notificationVisualEffectsView.layer.cornerRadius = 10
+        notificationVisualEffectsView.clipsToBounds = true
+
+        for button in actionButtons {
+            button.layer.cornerRadius = 10.0
+            button.clipsToBounds = true
+            button.layer.borderWidth = 0.5
+            button.layer.borderColor = UIColor.lightGray.cgColor
+        }
     }
 }
 
@@ -140,10 +150,6 @@ extension DesignViewController : UITextViewDelegate {
 
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
-        print("textViewDidEndEditing")
-    }
-
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
@@ -153,16 +159,19 @@ extension DesignViewController : UITextViewDelegate {
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
+        let navBarHeight = self.navigationController?.navigationBar.frame.height
+        let navBarOriginY = self.navigationController?.navigationBar.frame.origin.y
+        baseHeight = Float(navBarHeight!) + Float(navBarOriginY!)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == CGFloat(baseHeight) {
                 self.view.frame.origin.y -= keyboardSize.height
             }
         }
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
+        if self.view.frame.origin.y != CGFloat(baseHeight) {
+            self.view.frame.origin.y = CGFloat(baseHeight)
         }
     }
 }
@@ -173,9 +182,6 @@ extension DesignViewController: UIImagePickerControllerDelegate, UINavigationCon
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
-
-        print("Picker didFinishPickingMediaWithInfo from source:\(picker.sourceType)")
-
         guard let image = info[.editedImage] as? UIImage else {
             print("No image found")
             return

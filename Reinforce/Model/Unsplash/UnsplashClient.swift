@@ -31,7 +31,11 @@ class UnsplashClient : NSObject {
             data, response, error in
 
             guard error == nil else {
-                debugPrint("Error : \(#function), \(#line), \(String(describing: error))")
+                if let error = error as NSError?, Constants.Errors.networkErrorCodes.contains(error.code) {
+                    completionHandler(Constants.Errors.noNetwork, nil)
+                } else {
+                    completionHandler(error as NSError?, nil)
+                }
                 return
             }
 
@@ -39,6 +43,12 @@ class UnsplashClient : NSObject {
                 debugPrint("Error : \(#function), \(#line)")
                 return
             }
+
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                debugPrint("Received a status code other than 200.")
+                return
+            }
+
 
             var nextUrlString: String?
             if let httpResponse = response as? HTTPURLResponse {
@@ -56,6 +66,11 @@ class UnsplashClient : NSObject {
 
             guard let results = parsedResult?[Constants.Unsplash.resultsKey] as? [[String: AnyObject]] else {
                 print("Could not load results")
+                return
+            }
+
+            guard results.count != 0 else {
+                completionHandler(Constants.Errors.noPhotosFound, nil)
                 return
             }
 
@@ -109,7 +124,7 @@ class UnsplashClient : NSObject {
                 print("Could not make url from thumbUrl")
                 continue
             }
-
+            setNetworkActivityIndicatorVisibility(true)
             downloadThumbTask = URLSession.shared.dataTask(with: url) {
                 data, response, error in
                 guard error == nil else {
@@ -128,7 +143,7 @@ class UnsplashClient : NSObject {
                 } catch {
                     print("Error while trying to save unsplash context")
                 }
-
+                setNetworkActivityIndicatorVisibility(false)
             }
             downloadThumbTask.resume()
         }
@@ -188,7 +203,7 @@ class UnsplashClient : NSObject {
         guard let urlString = photo.fullUrl, let url = URL(string: urlString) else {
             return
         }
-
+        setNetworkActivityIndicatorVisibility(true)
         downloadFullImageTask = URLSession.shared.dataTask(with: url) {
             data, response, error in
             guard error == nil, data != nil else {
@@ -199,6 +214,7 @@ class UnsplashClient : NSObject {
             photo.fullImage = data
             self.dataController.saveUnsplashContext()
             completionHandler(nil, data)
+            setNetworkActivityIndicatorVisibility(false)
         }
         downloadFullImageTask.resume()
     }

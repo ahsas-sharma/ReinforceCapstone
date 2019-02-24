@@ -24,6 +24,12 @@ public func formatQueryString(_ queryString: String) -> String {
     return query
 }
 
+/// Handles visibility of network activity indicator
+public func setNetworkActivityIndicatorVisibility(_ visible: Bool) {
+    DispatchQueue.main.async {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = visible
+    }
+}
 
 // Source : https://stackoverflow.com/a/52404009
 extension UIButton {

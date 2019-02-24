@@ -15,6 +15,8 @@ class UnsplashViewController : UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var loadMoreResultsButton: UIButton!
+    @IBOutlet weak var noResultsView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var unsplashClient = UnsplashClient()
     var fetchedResultsController : NSFetchedResultsController<Photo>!
@@ -22,26 +24,27 @@ class UnsplashViewController : UIViewController {
     var nextUrlString: String?
     var blockOperation : BlockOperation!
     var lastIndexPath : IndexPath!
-
+    var designViewController: DesignViewController!
     var selectedPhoto : Photo!
-//    var selectedImage : UIImage?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePhotoResultsControllerAndFetch()
         configureCollectionViewFlowLayout()
+        navigationController?.hidesBarsOnTap = false
+        navigationController?.navigationBar.isHidden = false
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
     // MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func doneButtonTapped(_ sender: Any) {
-        
-    }
 
     @IBAction func loadMoreResultsButtonTapped(_ sender: Any) {
         loadMoreResultsButton.isEnabled = false
@@ -63,18 +66,45 @@ class UnsplashViewController : UIViewController {
 
     // MARK: - Helper
     fileprivate func resetPhotoSearchResults(){
-        dataController.deleteAllPhotos()
-        collectionView.reloadData()
+        guard let fetchedObjects = fetchedResultsController.fetchedObjects, fetchedObjects.count == 0 else {
+            fetchedResultsController = nil
+            dataController.deleteAllPhotos()
+            configurePhotoResultsControllerAndFetch()
+            collectionView.reloadData()
+            return
+        }
+
         nextUrlString = nil
+        self.noResultsView.isHidden = true
         loadMoreResultsButton.isEnabled = false
     }
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == Constants.Identifiers.unsplashPhotoViewerSegue {
-//            let destinationVC = segue.destination as! UnsplashPhotoViewController
-//            destinationVC.photo = selectedPhoto
-//        }
-//    }
+    /// Receives an error object and handles UI feedback accordingly
+    private func handleError(_ error: NSError) {
+        DispatchQueue.main.async {
+            switch error {
+            case Constants.Errors.noPhotosFound:
+                self.noResultsView.isHidden = false
+                self.activityIndicator.stopAnimating()
+            default: self.showAlertFor(error: error)
+            }
+        }
+    }
+
+    /// Displays an alert to the user with details about the error
+    fileprivate func showAlertFor(error: NSError) {
+        var err = error
+        if Constants.Errors.networkErrorCodes.contains(error.code) {
+            err = Constants.Errors.noNetwork
+        }
+        let alertController = UIAlertController(title: err.domain, message: err.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: { action in
+            alertController.dismiss(animated: true, completion:{})
+        })
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion:nil)
+    }
+
 
 }
 extension UnsplashViewController : UICollectionViewDataSource, UICollectionViewDelegate {
@@ -110,12 +140,12 @@ extension UnsplashViewController : UICollectionViewDataSource, UICollectionViewD
         self.selectedPhoto = photo
         let unsplashPhotoVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.unsplashPhotoViewController) as! UnsplashPhotoViewController
         unsplashPhotoVC.photo = photo
-        print("Set unsplash VC photo to : \(unsplashPhotoVC.photo)")
+        unsplashPhotoVC.designViewController = self.designViewController
         self.navigationController?.pushViewController(unsplashPhotoVC, animated: true)
     }
 
 
-    // check if collectionview indexPath is valid
+    // Check if collectionview indexPath is valid
     fileprivate func collectionViewIndexPathIsValid(indexPath: IndexPath) -> Bool {
         return indexPath.section < numberOfSections(in: collectionView) && indexPath.row < collectionView.numberOfItems(inSection: indexPath.section)
 
@@ -137,6 +167,8 @@ extension UnsplashViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
 
+        resetPhotoSearchResults()
+
         guard let searchText = searchBar.text, searchText != "" else {
             return
         }
@@ -145,7 +177,7 @@ extension UnsplashViewController : UISearchBarDelegate {
         unsplashClient.searchPhotosByKeywords(searchText, next: nil, completionHandler: {
             error, nextUrlString in
             guard error == nil else {
-                print("Error :\(String(describing: error))")
+                self.handleError(error!)
                 return
             }
             self.nextUrlString = nextUrlString

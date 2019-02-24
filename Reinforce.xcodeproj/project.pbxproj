@@ -68,7 +68,6 @@
 		FC7D168E2219395000335624 /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D168D2219395000335624 /* AttachmentViewController.swift */; };
 		FC7D1691221957B700335624 /* UnsplashClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1690221957B700335624 /* UnsplashClient.swift */; };
 		FC7D1693221958B600335624 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1692221958B600335624 /* Utility.swift */; };
-		FC7D16952219623B00335624 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D16942219623B00335624 /* Photo.swift */; };
 		FC854D96220D778B00E2FB51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D95220D778B00E2FB51 /* AppDelegate.swift */; };
 		FC854D98220D778B00E2FB51 /* CLImageEditorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D97220D778B00E2FB51 /* CLImageEditorExample.swift */; };
 		FC854D9B220D778B00E2FB51 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC854D99220D778B00E2FB51 /* Main.storyboard */; };
@@ -183,7 +182,6 @@
 		FC7D168D2219395000335624 /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		FC7D1690221957B700335624 /* UnsplashClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashClient.swift; sourceTree = "<group>"; };
 		FC7D1692221958B600335624 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		FC7D16942219623B00335624 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		FC854D92220D778B00E2FB51 /* Reinforce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reinforce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC854D95220D778B00E2FB51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC854D97220D778B00E2FB51 /* CLImageEditorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLImageEditorExample.swift; sourceTree = "<group>"; };
@@ -460,7 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				FC7D1690221957B700335624 /* UnsplashClient.swift */,
-				FC7D16942219623B00335624 /* Photo.swift */,
 			);
 			path = Unsplash;
 			sourceTree = "<group>";
@@ -627,7 +624,6 @@
 			files = (
 				FC08DBC32216949100C96013 /* CLToneCurveTool.m in Sources */,
 				FC854D98220D778B00E2FB51 /* CLImageEditorExample.swift in Sources */,
-				FC7D16952219623B00335624 /* Photo.swift in Sources */,
 				FC08DBBA2216949100C96013 /* CLFilterTool.m in Sources */,
 				FC08DBE1221694A800C96013 /* CLPickerView.m in Sources */,
 				FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */,

@@ -44,7 +44,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         let fetchRequest : NSFetchRequest<Reminder> = Reminder.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending : false)
         fetchRequest.sortDescriptors = [sortDescriptor]
-
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         do {
@@ -134,7 +133,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "Create beautiful personalized reminders with quotes, images and custom notifications."
+        let str = "Create beautiful personalized reminders with famous quotes, stunning photos and custom notifications."
         let attrs = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
         return NSAttributedString(string: str, attributes: attrs)
     }
@@ -144,15 +143,13 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
-        let str = "Add a new reminder"
+        let str = "Design a notification"
         let attrs = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .callout)]
         return NSAttributedString(string: str, attributes: attrs)
     }
 
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-        let ac = UIAlertController(title: "This is not the right place!", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Hurray", style: .default))
-        present(ac, animated: true)
+        performSegue(withIdentifier: Constants.Identifiers.newDesignSegue, sender: nil)
     }
 }
 

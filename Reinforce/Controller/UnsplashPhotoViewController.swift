@@ -10,6 +10,7 @@ import UIKit
 
 class UnsplashPhotoViewController : UIViewController {
 
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var fullImageView: UIImageView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -18,19 +19,42 @@ class UnsplashPhotoViewController : UIViewController {
     @IBOutlet weak var userDetailsView: UIView!
 
     var photo: Photo!
+    var designViewController : DesignViewController!
     let unsplashClient = UnsplashClient()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.hidesBarsOnTap = true
+        navigationController?.navigationBar.isHidden = true
+
         userDetailsView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.3)
         styleUserProfileImageView()
         loadFullImage()
         loadUserDetails()
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.navigationBar.tintColor = .white
+
+        if photo.fullImage == nil { doneButton.isEnabled = false }
+
     }
 
-    func loadFullImage() {
+    override var prefersStatusBarHidden: Bool {
+        return navigationController?.isNavigationBarHidden == true
+    }
+
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return UIStatusBarAnimation.slide
+    }
+
+    @IBAction func doneButtonTapped(_ sender: Any) {
+        guard let fullImageData = self.photo.fullImage else {
+            print("Could not get full image data")
+            return
+        }
+        designViewController.attachmentImageView.image = UIImage(data: fullImageData)
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+
+    /// Checks if the high-resolution version of the photo is already available and downloads it if required.
+    fileprivate func loadFullImage() {
         if let fullImage = photo.fullImage {
             activityIndicator.stopAnimating()
             self.fullImageView.image = UIImage(data: fullImage)
@@ -46,17 +70,20 @@ class UnsplashPhotoViewController : UIViewController {
                 }
                 DispatchQueue.main.async {
                     self.fullImageView.image = UIImage(data: imageData!)
+                    self.doneButton.isEnabled = true
                 }
             })
         }
     }
 
-    func styleUserProfileImageView() {
+    /// Adds corner radius to create circle effect for profile imageView.
+    fileprivate func styleUserProfileImageView() {
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2
         self.profileImageView.clipsToBounds = true
     }
 
-    func loadUserDetails() {
+    /// Displays username, fullname and profile image of the Unsplash user who created this photo
+    fileprivate func loadUserDetails() {
         self.fullNameLabel.text = (photo.name != nil ? photo.name : "Not available")
         self.usernameLabel.text = (photo.username != nil ? photo.username : "Not available")
 

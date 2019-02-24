@@ -44,12 +44,13 @@ class DataController {
     }
 
     // Unsplash
-    func deleteAllPhotos() {
+    func deleteAllPhotos(completion: (()-> Void)? = nil) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
         fetchRequest.returnsObjectsAsFaults = false
         do
         {
             let results = try unsplashContext.fetch(fetchRequest)
+            guard results.count != 0 else { return }
             for managedObject in results
             {
                 let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
@@ -59,6 +60,7 @@ class DataController {
         } catch let error as NSError {
             print("Error while deleting data:\(error)")
         }
+        completion?()
     }
 
     func saveUnsplashContext() {
