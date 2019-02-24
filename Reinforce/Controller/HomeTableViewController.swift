@@ -8,26 +8,22 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     var dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
     var fetchedResultsController : NSFetchedResultsController<Reminder>!
+    @IBOutlet weak var editButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         configureFetchedResultsControllerAndFetch()
-        
+
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -62,6 +58,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let count = fetchedResultsController.fetchedObjects?.count else {
+            editButton.isEnabled = false
             return 0
         }
         return count
@@ -77,51 +74,71 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         return cell
     }
 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            deleteReminderAtIndexPath(indexPath)
+            print("Delete item at indexPath :\(indexPath)")
+            //            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
-    */
 
+    @IBAction  func editButtonTapped() {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        tableView.isEditing ? (editButton.title = "Done") : (editButton.title = "Edit")
+    }
+
+    func deleteReminderAtIndexPath(_ indexPath: IndexPath) {
+        let reminder = fetchedResultsController.object(at: indexPath)
+        let notificationRequests = reminder.requests?.allObjects as! [Request]
+        var savedIdentifiers = [String]()
+        guard !notificationRequests.isEmpty else {
+            print("Could not find any notification requests for the given object.")
+            return
+        }
+
+        for request in notificationRequests {
+            if let identifier = request.identifier?.uuidString {
+                print("Object Request identifier: \(identifier)")
+                savedIdentifiers.append(identifier)
+            }
+        }
+        var pendingRequestIdentifiers = [String]()
+
+        // Get list of current pending notification requests and filter the ones related to the Reminder object facing deletion.
+        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: {
+            requests in
+            for request in requests {
+                if savedIdentifiers.contains(request.identifier) {
+                    pendingRequestIdentifiers.append(request.identifier)
+                }
+            }
+            print("Count of pending notification identifiers matching this reminder: \(pendingRequestIdentifiers.count)")
+        })
+
+        // Remove notifications
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: pendingRequestIdentifiers)
+
+        for request in notificationRequests {
+            let object = dataController.viewContext.object(with: request.objectID)
+            dataController.viewContext.delete(object)
+            print("Deleted a request object")
+        }
+        dataController.viewContext.delete(reminder)
+        do {
+            try dataController.viewContext.save()
+        } catch {
+            print("There was an error while trying to save the view context.")
+        }
+    }
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     // MARK: - Navigation
 
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
 
 
     // MARK: - DZNEmptyDataSet
@@ -139,7 +156,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "home_notification")
+        return UIImage(named: "notification_color")
     }
 
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
@@ -151,6 +168,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
         performSegue(withIdentifier: Constants.Identifiers.newDesignSegue, sender: nil)
     }
+
 }
 
 
@@ -159,8 +177,19 @@ extension HomeTableViewController : NSFetchedResultsControllerDelegate {
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .delete {
+            print("deleting tableview row")
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        }
+        if type == .insert {
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        }
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("controllerDidChangeContent")
+        if controller.fetchedObjects!.isEmpty {
+            tableView.reloadData()
+        }
     }
 }

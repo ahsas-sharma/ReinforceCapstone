@@ -65,7 +65,6 @@
 		FC3C5D762217F03B00B1E019 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3C5D752217F03B00B1E019 /* Quote.swift */; };
 		FC70A89622180EF90072C315 /* PaperQuotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */; };
 		FC7D168A2219356600335624 /* DesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D16892219356600335624 /* DesignViewController.swift */; };
-		FC7D168E2219395000335624 /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D168D2219395000335624 /* AttachmentViewController.swift */; };
 		FC7D1691221957B700335624 /* UnsplashClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1690221957B700335624 /* UnsplashClient.swift */; };
 		FC7D1693221958B600335624 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D1692221958B600335624 /* Utility.swift */; };
 		FC854D96220D778B00E2FB51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC854D95220D778B00E2FB51 /* AppDelegate.swift */; };
@@ -179,7 +178,6 @@
 		FC3C5D752217F03B00B1E019 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperQuotesViewController.swift; sourceTree = "<group>"; };
 		FC7D16892219356600335624 /* DesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignViewController.swift; sourceTree = "<group>"; };
-		FC7D168D2219395000335624 /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		FC7D1690221957B700335624 /* UnsplashClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashClient.swift; sourceTree = "<group>"; };
 		FC7D1692221958B600335624 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		FC854D92220D778B00E2FB51 /* Reinforce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reinforce.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -512,7 +510,6 @@
 				FC08DB572216767A00C96013 /* HomeTableViewController.swift */,
 				FC70A89522180EF90072C315 /* PaperQuotesViewController.swift */,
 				FC7D16892219356600335624 /* DesignViewController.swift */,
-				FC7D168D2219395000335624 /* AttachmentViewController.swift */,
 				FC34A48D221D318900114349 /* UnsplashViewController.swift */,
 				FC34A48F221D3C9000114349 /* NotificationsTableViewController.swift */,
 				FC246FC222212DF200D630C1 /* UnsplashPhotoViewController.swift */,
@@ -676,7 +673,6 @@
 				FC08DBB12216949100C96013 /* CLHueEffect.m in Sources */,
 				FC08DBC02216949100C96013 /* CLCircleView.m in Sources */,
 				FC08DBDF221694A800C96013 /* CLResizeTool.m in Sources */,
-				FC7D168E2219395000335624 /* AttachmentViewController.swift in Sources */,
 				FC08DBB42216949100C96013 /* CLSpotEffect.m in Sources */,
 				FC08DBE0221694A800C96013 /* CLFontPickerView.m in Sources */,
 				FC08DBBB2216949100C96013 /* CLFilterBase.m in Sources */,

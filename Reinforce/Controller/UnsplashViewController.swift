@@ -32,6 +32,9 @@ class UnsplashViewController : UIViewController {
         super.viewDidLoad()
         configurePhotoResultsControllerAndFetch()
         configureCollectionViewFlowLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnTap = false
         navigationController?.navigationBar.isHidden = false
     }
@@ -39,6 +42,7 @@ class UnsplashViewController : UIViewController {
     override var prefersStatusBarHidden: Bool {
         return false
     }
+
 
     // MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: Any) {
@@ -49,14 +53,16 @@ class UnsplashViewController : UIViewController {
     @IBAction func loadMoreResultsButtonTapped(_ sender: Any) {
         loadMoreResultsButton.isEnabled = false
         lastIndexPath = IndexPath(item: collectionView.numberOfItems(inSection: 0) - 1 , section: 0)
+        activityIndicator.startAnimating()
         unsplashClient.searchPhotosByKeywords("", next: nextUrlString, completionHandler: {
             error, nextUrlString in
             guard error == nil else {
-                print("Error :\(String(describing: error))")
+                self.handleError(error!)
                 return
             }
             self.nextUrlString = nextUrlString
             DispatchQueue.main.async{
+                self.activityIndicator.stopAnimating()
                 self.collectionView.reloadData()
                 self.nextUrlString != nil ? (self.loadMoreResultsButton.isEnabled = true) : (self.loadMoreResultsButton.isEnabled = false)
                 self.collectionView.scrollToItem(at: self.lastIndexPath, at: .centeredVertically, animated: true)
@@ -174,6 +180,7 @@ extension UnsplashViewController : UISearchBarDelegate {
         }
 
         print("Search button Clicked with text: \(searchText)")
+        activityIndicator.startAnimating()
         unsplashClient.searchPhotosByKeywords(searchText, next: nil, completionHandler: {
             error, nextUrlString in
             guard error == nil else {
@@ -182,6 +189,7 @@ extension UnsplashViewController : UISearchBarDelegate {
             }
             self.nextUrlString = nextUrlString
             DispatchQueue.main.async{
+                self.activityIndicator.stopAnimating()
                 self.collectionView.reloadData()
                 if self.nextUrlString != nil { self.loadMoreResultsButton.isEnabled = true }
             }

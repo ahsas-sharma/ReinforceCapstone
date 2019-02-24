@@ -18,7 +18,6 @@ class HomeTableViewCell : UITableViewCell {
             self.bodyLabel.text = reminder.body
             self.attachmentImageView.image = UIImage(data: reminder.image!)
             self.weekdaysLabel.text = reminder.weekdays
-            // TODO: - Fix UI mess up for more than 5 days
             self.timeLabel.text = reminder.timeString
         }
     }
@@ -38,37 +37,4 @@ class HomeTableViewCell : UITableViewCell {
         reminderView.layer.borderColor = UIColor.lightGray.cgColor
         reminderView.layer.borderWidth = 0.5
     }
-
-    @IBAction func switchValueChanged(_ sender: UISwitch) {
-        if !sender.isOn {
-//            activeNotificationsForReminder() // TEST
-            UIView.animate(withDuration: 0.5, animations: {
-                self.weekdaysLabel.isEnabled = false
-                self.timeLabel.isEnabled = false
-                self.notificationIconImageView.image = UIImage(named:"notification_silent")
-            })
-
-        } else {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.weekdaysLabel.isEnabled = true
-                self.timeLabel.isEnabled = true
-                self.notificationIconImageView.image = UIImage(named:"home_notification")
-            })
-
-        }
-    }
-
-    func activeNotificationsForReminder() {
-        let notificationRequests = reminder.requests as! [Request]
-        var identifiers = [UUID]()
-        for request in notificationRequests {
-            print(request.identifier)
-            identifiers.append(request.identifier!)
-        }
-
-
-
-    }
-
-
 }

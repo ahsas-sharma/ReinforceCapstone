@@ -104,6 +104,13 @@ class DesignViewController : UIViewController {
         reminder.body = bodyTextView.text
         reminder.image = attachmentImageView.image?.jpegData(compressionQuality: 0.50)
         reminder.createdAt = Date()
+
+        // For future implementation (optional image attachment)
+        //        if attachmentImageView.image == UIImage(named: "preview_background") {
+        //            reminder.image = nil
+        //        } else {
+        //            reminder.image = attachmentImageView.image?.jpegData(compressionQuality: 0.50)
+        //        }
     }
 
     /// Presents an imagePickerController based on the source type

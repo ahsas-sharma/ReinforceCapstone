@@ -26,7 +26,6 @@ class UnsplashPhotoViewController : UIViewController {
         super.viewDidLoad()
         navigationController?.hidesBarsOnTap = true
         navigationController?.navigationBar.isHidden = true
-
         userDetailsView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.3)
         styleUserProfileImageView()
         loadFullImage()
