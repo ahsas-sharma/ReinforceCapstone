@@ -4,6 +4,7 @@ An iOS app created as the capstone project for the iOS Developer nanodegree prog
 
 <p align="center">
   <img src="https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/DevicePreview.jpg">
+  <img src="https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/DevicePreviewBig.jpg">
 </p>
 <p align="center">
 <b>Beautiful rich local notifications</b>
