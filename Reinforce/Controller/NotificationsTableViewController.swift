@@ -147,7 +147,6 @@ class NotificationsTableViewController : UITableViewController {
                     print("There was an error while scheduling the notification : \(String(describing: error?.localizedDescription))")
                     return
                 }
-                print("Added a request with identifier : \(request.identifier)")
             })
         }
 

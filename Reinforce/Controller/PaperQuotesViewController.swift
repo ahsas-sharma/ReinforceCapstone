@@ -39,7 +39,6 @@ class PaperQuotesViewController : UIViewController {
     // MARK: - IBActions
 
     @IBAction func loadMoreResultsButtonTapped(_ sender: UIButton) {
-        print("Load more results button tapped")
         self.loadMoreResultsButton.isEnabled = false
         self.activityIndicator.startAnimating()
         paperQuotesClient.fetchMoreQuotes(using: quoteSearchManager, completionHandler: {
@@ -51,7 +50,6 @@ class PaperQuotesViewController : UIViewController {
             self.quoteSearchManager.nextUrl = nextUrlString
             let lastRow = self.quotes.count
             self.quotes += newQuotes!
-            print("NewQuotes Count: \(newQuotes!.count)")
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
@@ -121,9 +119,6 @@ class PaperQuotesViewController : UIViewController {
 // MARK: - UISearchBar
 
 extension PaperQuotesViewController : UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print("Text Did End Editing")
-    }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

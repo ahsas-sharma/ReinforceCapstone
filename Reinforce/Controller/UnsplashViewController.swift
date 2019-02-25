@@ -184,7 +184,6 @@ extension UnsplashViewController : UISearchBarDelegate {
             return
         }
 
-        print("Search button Clicked with text: \(searchText)")
         activityIndicator.startAnimating()
         unsplashClient.searchPhotosByKeywords(searchText, next: nil, completionHandler: {
             error, nextUrlString in
@@ -203,7 +202,6 @@ extension UnsplashViewController : UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("Cancel button was clicked")
         searchBar.resignFirstResponder()
     }
 }
