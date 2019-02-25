@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Your camera is mine!</string>
+	<string>Take a photo to display in the notification</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow to select a photo from your library to display in the notification.</string>
+	<string>Select a photo from your library to display in the notification</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

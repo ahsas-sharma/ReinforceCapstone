@@ -34,7 +34,7 @@ struct Constants {
     // MARK: - TextView -
     struct TextView {
         static let defaultTitleText = "Tap to edit the title"
-        static let defaultBodyText = "Tap to edit the body text.\nSearch PaperQuote's library of over 2 million famous quotes and add beautiful photos from Unsplash."
+        static let defaultBodyText = "Tap to edit the body text. Use the buttons below to search PaperQuote's library of over 12 million famous quotes or add beautiful high-resolution photos from Unsplash."
     }
 
 
