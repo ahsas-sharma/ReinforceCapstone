@@ -171,6 +171,9 @@ extension DesignViewController : UITextViewDelegate {
         let navBarHeight = self.navigationController?.navigationBar.frame.height
         let navBarOriginY = self.navigationController?.navigationBar.frame.origin.y
         baseHeight = Float(navBarHeight!) + Float(navBarOriginY!)
+
+        // baseHeight check
+        baseHeight == nil ? baseHeight = 64.0 : ()
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == CGFloat(baseHeight) {
                 self.view.frame.origin.y -= keyboardSize.height
@@ -179,6 +182,8 @@ extension DesignViewController : UITextViewDelegate {
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
+        // baseHeight check
+        baseHeight == nil ? baseHeight = 64.0 : ()
         if self.view.frame.origin.y != CGFloat(baseHeight) {
             self.view.frame.origin.y = CGFloat(baseHeight)
         }

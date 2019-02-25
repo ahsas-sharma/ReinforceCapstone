@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="preview_background" translatesAutoresizingMaskIntoConstraints="NO" id="Y4k-rj-VMP">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="637"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyW-Da-uXk" userLabel="Preview Section">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="511"/>
@@ -160,7 +160,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Y4k-rj-VMP" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="3oz-cR-mAB"/>
+                            <constraint firstItem="Y4k-rj-VMP" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="34" id="3oz-cR-mAB"/>
                             <constraint firstItem="WyW-Da-uXk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="B3L-a1-vxS"/>
                             <constraint firstItem="WyW-Da-uXk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="BLr-wW-RFJ"/>
                             <constraint firstItem="Y4k-rj-VMP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Gid-bj-qrB"/>
@@ -201,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2372" y="-1560.2698650674663"/>
+            <point key="canvasLocation" x="2371.0144927536235" y="-1560.9375"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="et1-N5-EfK">

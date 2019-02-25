@@ -36,20 +36,14 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        print("viewWillAppear")
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let count = fetchedResultsController.fetchedObjects?.count else {
@@ -113,7 +107,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
 
         for request in notificationRequests {
             if let identifier = request.identifier?.uuidString {
-                print("Object Request identifier: \(identifier)")
                 savedIdentifiers.append(identifier)
             }
         }
@@ -135,7 +128,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         for request in notificationRequests {
             let object = dataController.viewContext.object(with: request.objectID)
             dataController.viewContext.delete(object)
-            print("Deleted a request object")
         }
         dataController.viewContext.delete(reminder)
         do {
@@ -178,12 +170,9 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
 
 // MARK: - FetchedResultsController Delegate
 extension HomeTableViewController : NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-    }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         if type == .delete {
-            print("deleting tableview row")
             tableView.deleteRows(at: [indexPath!], with: .automatic)
         }
         if type == .insert {

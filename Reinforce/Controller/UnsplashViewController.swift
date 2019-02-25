@@ -22,7 +22,6 @@ class UnsplashViewController : UIViewController {
     var fetchedResultsController : NSFetchedResultsController<Photo>!
     var dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
     var nextUrlString: String?
-    var blockOperation : BlockOperation!
     var lastIndexPath : IndexPath!
     var designViewController: DesignViewController!
     var selectedPhoto : Photo!
@@ -35,6 +34,7 @@ class UnsplashViewController : UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.hidesBarsOnTap = false
         navigationController?.navigationBar.isHidden = false
     }
@@ -116,10 +116,6 @@ class UnsplashViewController : UIViewController {
 }
 extension UnsplashViewController : UICollectionViewDataSource, UICollectionViewDelegate {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let count = fetchedResultsController.fetchedObjects?.count else {
             return 0
@@ -158,7 +154,7 @@ extension UnsplashViewController : UICollectionViewDataSource, UICollectionViewD
 
     // Check if collectionview indexPath is valid
     fileprivate func collectionViewIndexPathIsValid(indexPath: IndexPath) -> Bool {
-        return indexPath.section < numberOfSections(in: collectionView) && indexPath.row < collectionView.numberOfItems(inSection: indexPath.section)
+        return indexPath.section < 1 && indexPath.row < collectionView.numberOfItems(inSection: indexPath.section)
 
     }
 
@@ -224,14 +220,6 @@ extension UnsplashViewController : NSFetchedResultsControllerDelegate {
         } catch {
             print("FetchResultsController.performfetch crashed")
         }
-    }
-
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        blockOperation = BlockOperation()
-    }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
