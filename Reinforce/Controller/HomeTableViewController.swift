@@ -200,6 +200,7 @@ extension HomeTableViewController : NSFetchedResultsControllerDelegate {
 
         if controller.fetchedObjects!.isEmpty {
             self.editButton.title = "Edit"
+            isEmptyTable = true
             tableView.reloadData()
         }
     }
