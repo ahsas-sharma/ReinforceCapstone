@@ -25,18 +25,22 @@ class UnsplashPhotoViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.hidesBarsOnTap = true
-        navigationController?.navigationBar.isHidden = true
         userDetailsView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.3)
         styleUserProfileImageView()
         loadFullImage()
         loadUserDetails()
-
         if photo.fullImage == nil { doneButton.isEnabled = false }
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     override var prefersStatusBarHidden: Bool {
         return navigationController?.isNavigationBarHidden == true
+
     }
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -59,7 +63,10 @@ class UnsplashPhotoViewController : UIViewController {
             self.fullImageView.image = UIImage(data: fullImage)
         } else {
             activityIndicator.startAnimating()
-            fullImageView.image = UIImage(data: photo.thumbImage!)
+            // if thumb image is available, set that for now
+            if let thumbImage = photo.thumbImage {
+                fullImageView.image = UIImage(data: thumbImage)
+            }
             unsplashClient.downloadFullResolutionImage(forPhoto: photo, completionHandler: {
                 error, imageData in
                 self.stopActivityIndicator()

@@ -14,15 +14,24 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
 
     var dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
     var fetchedResultsController : NSFetchedResultsController<Reminder>!
+    var isEmptyTable: Bool = true
     @IBOutlet weak var editButton: UIBarButtonItem!
+
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureFetchedResultsControllerAndFetch()
+
+        // Add logo to title view
+        let logo = UIImage(named:"splash_bell")
+        let imageView = UIImageView(image: logo)
+        imageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = imageView
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
-
-        configureFetchedResultsControllerAndFetch()
 
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
@@ -36,23 +45,9 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
         tableView.reloadData()
     }
 
-    fileprivate func configureFetchedResultsControllerAndFetch() {
-        let fetchRequest : NSFetchRequest<Reminder> = Reminder.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending : false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Error while trying to perform fetch")
-        }
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -77,17 +72,37 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             deleteReminderAtIndexPath(indexPath)
-            print("Delete item at indexPath :\(indexPath)")
-            //            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+
+    // MARK: - IBAction
 
     @IBAction  func editButtonTapped() {
         tableView.setEditing(!tableView.isEditing, animated: true)
         tableView.isEditing ? (editButton.title = "Done") : (editButton.title = "Edit")
     }
 
-    func deleteReminderAtIndexPath(_ indexPath: IndexPath) {
+
+    // MARK: - Helper
+
+    /// Prepares the fetchedResultsController to fetch Reminder objects, sorted by the createdAt attribute and perform the fetch.
+    fileprivate func configureFetchedResultsControllerAndFetch() {
+        let fetchRequest : NSFetchRequest<Reminder> = Reminder.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending : false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Error while trying to perform fetch")
+        }
+    }
+
+    /// Handles the safe deletion of of a reminder object and its associated request objects after cancelling its pending notifications
+    /// - Parameters:
+    ///     - indexPath : path of the row containing the reminder object to delete
+    fileprivate func deleteReminderAtIndexPath(_ indexPath: IndexPath) {
         let reminder = fetchedResultsController.object(at: indexPath)
         let notificationRequests = reminder.requests?.allObjects as! [Request]
         var savedIdentifiers = [String]()
@@ -112,7 +127,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
                     pendingRequestIdentifiers.append(request.identifier)
                 }
             }
-            print("Count of pending notification identifiers matching this reminder: \(pendingRequestIdentifiers.count)")
         })
 
         // Remove notifications
@@ -130,16 +144,6 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
             print("There was an error while trying to save the view context.")
         }
     }
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
 
     // MARK: - DZNEmptyDataSet
 
@@ -156,7 +160,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
     }
 
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "notification_color")
+        return nil
     }
 
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControl.State) -> NSAttributedString? {
@@ -172,6 +176,7 @@ class HomeTableViewController: UITableViewController, DZNEmptyDataSetSource, DZN
 }
 
 
+// MARK: - FetchedResultsController Delegate
 extension HomeTableViewController : NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     }
@@ -187,8 +192,14 @@ extension HomeTableViewController : NSFetchedResultsControllerDelegate {
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        print("controllerDidChangeContent")
+        // If it's the first item, reload tableview to hide the emptyDataSet view.
+        if isEmptyTable {
+            tableView.reloadData()
+            isEmptyTable = false
+        }
+
         if controller.fetchedObjects!.isEmpty {
+            self.editButton.title = "Edit"
             tableView.reloadData()
         }
     }

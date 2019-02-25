@@ -24,7 +24,6 @@ class UnsplashClient : NSObject {
         } else {
             url = constructUrl(query: keywords)
         }
-        print("Launching request with url:\(String(describing: url))")
 
         let request = URLRequest(url: url)
         searchPhotosTask = URLSession.shared.dataTask(with: request) {
@@ -99,7 +98,6 @@ class UnsplashClient : NSObject {
                 photo.name = name
                 photo.profileImageUrl = profileImageUrl
             }
-            print("Appended a new photo object: \(photo.objectID)")
             photos.append(photo)
         }
 
@@ -110,7 +108,6 @@ class UnsplashClient : NSObject {
             print("Error while trying to save unsplash context")
         }
 
-        print("Returning photos count: \(photos.count)")
         return photos
     }
 
@@ -135,7 +132,6 @@ class UnsplashClient : NSObject {
                     print("Could not download any data")
                     return
                 }
-                print("Downloaded a thumb image")
                 photo.thumbImage = data!
 
                 do {

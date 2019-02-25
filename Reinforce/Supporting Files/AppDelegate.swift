@@ -25,15 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataController.deleteAllPhotos()
         
         // TODO: - Move this function to when the first notification is created.
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {
-            (granted, error) in
-            if granted {
-                print("Notifications permission granted")
-            }
-            else {
-                print("Notifications permission denied because: \(String(describing: error?.localizedDescription)).")
-            }
-        })
+       
         
         return true
     }

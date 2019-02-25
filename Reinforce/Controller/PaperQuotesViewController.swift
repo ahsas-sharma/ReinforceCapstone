@@ -91,12 +91,13 @@ class PaperQuotesViewController : UIViewController {
     /// Receives an error object and handles UI feedback accordingly
     private func handleError(_ error: NSError) {
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             switch error {
             case Constants.Errors.noQuotesFound:
                 self.doneButton.isEnabled = false
                 self.noResultsView.isHidden = false
-                self.activityIndicator.stopAnimating()
-            default: self.showAlertFor(error: error)
+            default:
+                self.showAlertFor(error: error)
             }
         }
     }
@@ -145,7 +146,6 @@ extension PaperQuotesViewController : UISearchBarDelegate {
 
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
-                self.doneButton.isEnabled = true
                 self.tableView.reloadData()
                 // If nextUrl is available, enable the load more results button
                 if self.quoteSearchManager.nextUrl != nil {
@@ -188,5 +188,6 @@ extension PaperQuotesViewController : UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedQuote = quotes[indexPath.row]
         designViewController.selectedQuote = selectedQuote
+        if selectedQuote != nil { doneButton.isEnabled = true }
     }
 }

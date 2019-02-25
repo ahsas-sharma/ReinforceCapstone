@@ -29,40 +29,23 @@ class NotificationsTableViewController : UITableViewController {
     let dataController = (UIApplication.shared.delegate as! AppDelegate).dataController
     let currentCalendar = Calendar.current
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("viewDidLoad \(#file)")
+        self.saveBarButtonItem.isEnabled = false
         styleDaysSelectionButtons(dayButtonsCollection)
         updateTimeLabel()
-
-        // TEST NOTIFICATIONS
         let category = UNNotificationCategory(identifier: "notificationIdentifier", actions: [], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
-        UNUserNotificationCenter.current().delegate = self
-
-
     }
 
 
 
     // MARK: - IBActions
 
-    @IBAction func testButtonTapped(_ sender: Any) {
-        let center = UNUserNotificationCenter.current()
-
-        center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                print(request.identifier)
-                print(request.trigger.debugDescription)
-            }
-        })
-    }
-
-    // Common IBAction to handle selection of days
+    /// Common IBAction to handle selection of days
     @IBAction func toggleDaySelection(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        isAnyDaySelected() ? (self.saveBarButtonItem.isEnabled = true) : (self.saveBarButtonItem.isEnabled = false)
     }
 
 
@@ -70,36 +53,28 @@ class NotificationsTableViewController : UITableViewController {
         updateTimeLabel()
     }
 
-
-    /// Updates the time label based on timepicker value
-    fileprivate func updateTimeLabel() {
-        self.notificationTimeLabel.text = timePicker.date.formattedTimeString()
-    }
-
     @IBAction func saveButtonTapped(_ sender: Any) {
-        reminder.timeString = timePicker.date.formattedTimeString()
-        let requests = generateNotificationRequests(forReminder: reminder, withDate: timePicker.date)
-        for request in requests {
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: {
-                error in
-                guard error == nil else {
-                    print("There was an error while scheduling the notification : \(String(describing: error?.localizedDescription))")
-                    return
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {
+            settings in
+            if settings.authorizationStatus == .notDetermined {
+                // if authorization has not been given, request for permission and then schedule the notifications
+                DispatchQueue.main.async {
+                    self.requestNotificationPermission()
                 }
-                print("Added a request with identifier : \(request.identifier)")
-            })
-        }
-
-        reminder.isActive = true
-
-        do {
-            try dataController.backgroundContext.save()
-        } catch {
-            fatalError("Cannot save background context.")
-        }
-
-        self.navigationController?.dismiss(animated: true, completion: nil)
+            } else if settings.authorizationStatus == .denied {
+                // if authorization was denied, show alert informing the user what to do
+                DispatchQueue.main.async {
+                    self.showNoPermissionAlert()
+                }
+            } else if settings.authorizationStatus == .authorized {
+                // if authorized, schedule notifications
+                DispatchQueue.main.async {
+                    self.scheduleNotifications()
+                }
+            }
+        })
     }
+
 
     // MARK: - TableView DataSource and Delegate
 
@@ -132,6 +107,61 @@ class NotificationsTableViewController : UITableViewController {
 
 
     // MARK: - Helper
+
+    /// Shows alert for missing notification permissions
+    fileprivate func showNoPermissionAlert() {
+        let alert = UIAlertController(title: "Notification permissions not granted", message: "Please go to settings and allow notifications for this app.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: { action in
+            alert.dismiss(animated: true, completion: nil) })
+        alert.addAction(action)
+        self.present(alert, animated: true)
+    }
+
+    /// Updates the time label based on timepicker value
+    fileprivate func updateTimeLabel() {
+        self.notificationTimeLabel.text = timePicker.date.formattedTimeString()
+    }
+
+    /// Request notification permissions and if granted, proceed to schedule the notifications
+    fileprivate func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {
+            (granted, error) in
+            if granted {
+                DispatchQueue.main.async {
+                    self.scheduleNotifications()
+                }
+            }
+        })
+    }
+
+    // Schedule notifications using the reminder object and current time settings
+    fileprivate func scheduleNotifications () {
+        reminder.timeString = timePicker.date.formattedTimeString()
+        let requests = generateNotificationRequests(forReminder: reminder, withDate: timePicker.date)
+
+        for request in requests {
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: {
+                error in
+                guard error == nil else {
+                    // Add error handler in next version
+                    print("There was an error while scheduling the notification : \(String(describing: error?.localizedDescription))")
+                    return
+                }
+                print("Added a request with identifier : \(request.identifier)")
+            })
+        }
+
+        do {
+            try dataController.backgroundContext.save()
+        } catch {
+            fatalError("Cannot save background context.")
+        }
+        self.navigationController?.dismiss(animated: true, completion: nil)
+
+    }
+
+
+    /// Add background color and title color for an array of UIButtons
     func styleDaysSelectionButtons(_ buttons: [UIButton]) {
         for button in buttons {
             button.setBackgroundColor(color: #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1), forState: .selected)
@@ -152,8 +182,6 @@ class NotificationsTableViewController : UITableViewController {
             let uuid = UUID()
             let request = UNNotificationRequest(identifier: uuid.uuidString, content: content, trigger: trigger)
             requests.append(request)
-            print("content.attachment url:\(content.attachments[0].url)")
-            print("content.attachment identifier:\(content.attachments[0].identifier)")
 
             // Create request CoreData object
             let notificationRequest = Request(context: dataController.backgroundContext)
@@ -183,7 +211,6 @@ class NotificationsTableViewController : UITableViewController {
         for weekday in weekdays {
             let component = DateComponents(hour: hour, minute: minute, weekday: weekday)
             dateComponents.append(component)
-            print("Added component : \(component)")
         }
         return dateComponents
     }
@@ -191,7 +218,6 @@ class NotificationsTableViewController : UITableViewController {
     /// Returns a UNNotificationContent object constructed using the Reminder object
     func createNotificationContent(forReminder reminder: Reminder) -> UNNotificationContent {
         let content = UNMutableNotificationContent()
-        // TODO: add checks for optionals
         content.title = reminder.title!
         content.body = reminder.body!
         content.sound = UNNotificationSound.default
@@ -220,6 +246,17 @@ class NotificationsTableViewController : UITableViewController {
         return days
     }
 
+    /// Checks if any day selection has been made
+    private func isAnyDaySelected() -> Bool {
+        var isSelected = false
+        for button in dayButtonsCollection {
+            if button.isSelected {
+                isSelected = true
+                break
+            }
+        }
+        return isSelected
+    }
     /// Save image to disk and its URL as Reminder object attribute
     func saveImageAndURL(imageName: String, imageData: Data) -> URL? {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -231,21 +268,15 @@ class NotificationsTableViewController : UITableViewController {
         if FileManager.default.fileExists(atPath: fileURL.path) {
             do {
                 try FileManager.default.removeItem(atPath: fileURL.path)
-                print("Removed old image")
+                print("Removed an old image")
             } catch let removeError {
-                print("couldn't remove file at path", removeError)
+                print("Couldn't remove file at path", removeError)
             }
 
         }
 
         // TEST PRINT IMAGE SIZE
-        let byteCount = imageData.count
-        print("Byte count / 1048576 : \(byteCount/1048576) MB")
-        let bcf = ByteCountFormatter()
-        bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
-        bcf.countStyle = .file
-        let string = bcf.string(fromByteCount: Int64(byteCount))
-        print("Image Size: \(string)")
+        printImageSize(imageData: imageData)
 
         do {
             try imageData.write(to: fileURL)
@@ -253,13 +284,17 @@ class NotificationsTableViewController : UITableViewController {
             print("error saving file with error", error)
         }
 
-        // Update reminder object's localUrl attribute
-//        reminder.imageLocalURL = fileURL
-
-        print("fileURL: \(fileURL.description)")
-        print((loadImageFromDiskWith(fileName: imageName))?.size)
-
         return fileURL
+    }
+
+    // Test function to print image size
+    func printImageSize(imageData: Data) {
+        let byteCount = imageData.count
+        let bcf = ByteCountFormatter()
+        bcf.allowedUnits = [.useMB]
+        bcf.countStyle = .file
+        let size = bcf.string(fromByteCount: Int64(byteCount))
+        debugPrint("Image Size: \(size)")
     }
 
     // Load image from disk
@@ -283,49 +318,5 @@ class NotificationsTableViewController : UITableViewController {
 }
 
 
-extension Date {
-    var localDateDescription: String {
-        return description(with: NSLocale.current)
-    }
-
-    func toLocalTime() -> Date {
-        let timezone = TimeZone.current
-        let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
-        return Date(timeInterval: seconds, since: self)
-    }
-
-    func formattedTimeString() -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        formatter.dateFormat = "hh:mm a"
-        formatter.amSymbol = "AM"
-        formatter.pmSymbol = "PM"
-
-        let dateString = formatter.string(from: self)
-        return dateString
-    }
-
-}
-
-extension DateComponents {
-
-
-}
-
-
-// HANDLE NOTIFICATION ACTIONS
-extension NotificationsTableViewController : UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("Received response")
-        print(response)
-        let userInfo = response.notification.request.content.userInfo
-        switch response.actionIdentifier {
-        case "OPEN_URL":
-            print("Open URL action tapped for address:\(String(describing: userInfo["url"]))")
-            break
-        default:()
-        }
-    }
-}
 
 

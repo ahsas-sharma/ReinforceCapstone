@@ -16,7 +16,6 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="imageLocalURL" optional="YES" attributeType="URI" syncable="YES"/>
-        <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="timeString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weekdays" optional="YES" attributeType="String" syncable="YES"/>
@@ -31,8 +30,8 @@
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="requests" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="180"/>
-        <element name="Request" positionX="-63" positionY="9" width="128" height="135"/>
         <element name="Photo" positionX="-45" positionY="54" width="128" height="180"/>
+        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Request" positionX="-63" positionY="9" width="128" height="135"/>
     </elements>
 </model>

@@ -88,6 +88,7 @@ class UnsplashViewController : UIViewController {
     /// Receives an error object and handles UI feedback accordingly
     private func handleError(_ error: NSError) {
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             switch error {
             case Constants.Errors.noPhotosFound:
                 self.noResultsView.isHidden = false
@@ -142,6 +143,10 @@ extension UnsplashViewController : UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // make sure photo exists for indexPath
+        guard fetchedResultsController.hasObject(at: indexPath) else {
+            return
+        }
         let photo = fetchedResultsController.object(at: indexPath)
         self.selectedPhoto = photo
         let unsplashPhotoVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Identifiers.unsplashPhotoViewController) as! UnsplashPhotoViewController

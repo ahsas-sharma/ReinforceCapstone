@@ -30,7 +30,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="382"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="preview_background" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-W2-v8e">
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="design_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="w1m-W2-v8e">
                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="250"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="dmM-Ws-xgK"/>
@@ -91,8 +91,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iiw-ki-jcn">
                                                         <rect key="frame" x="0.0" y="0.0" width="177.5" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <state key="normal" title="Search PaperQuotes">
-                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="searchPaperQuotesButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2nn-kh-dAY"/>
@@ -101,8 +102,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1T-j6-f0f">
                                                         <rect key="frame" x="181.5" y="0.0" width="177.5" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <state key="normal" title="Search Unsplash">
-                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="searchUnsplashButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qY3-FY-tBC"/>
@@ -120,8 +122,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psp-Qz-Oto">
                                                         <rect key="frame" x="0.0" y="0.0" width="177.5" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <state key="normal" title="Take Photo">
-                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="takePhotoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1sc-bi-q6h"/>
@@ -130,8 +133,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4i-Dn-dnt">
                                                         <rect key="frame" x="181.5" y="0.0" width="177.5" height="40"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <state key="normal" title="Photo Library">
-                                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="photoLibraryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gdS-jG-Bdd"/>
@@ -393,7 +397,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4E7-ZF-6To" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3198" y="-1560"/>
+            <point key="canvasLocation" x="3159" y="-1560"/>
         </scene>
         <!--PaperQuotes Search-->
         <scene sceneID="Nkr-IV-QAy">
@@ -468,14 +472,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBE-6N-cDd" userLabel="Attribution View">
                                 <rect key="frame" x="0.0" y="593" width="375" height="30"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="zgg-Ch-wJV">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zgg-Ch-wJV">
                                         <rect key="frame" x="16" y="4" width="343" height="22"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paperQuotes" translatesAutoresizingMaskIntoConstraints="NO" id="q69-Cf-ghX">
-                                                <rect key="frame" x="0.0" y="0.0" width="46" height="22"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="12.5" height="22"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by quotes from paperquotes.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3M-p4-2aE">
-                                                <rect key="frame" x="46" y="0.0" width="297" height="22"/>
+                                                <rect key="frame" x="22.5" y="0.0" width="320.5" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -573,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfR-tK-1jw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2920.8000000000002" y="-822.63868065967017"/>
+            <point key="canvasLocation" x="2025" y="-787"/>
         </scene>
         <!--Unsplash Search-->
         <scene sceneID="j1L-BZ-by9">
@@ -636,10 +640,11 @@
                                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No photos found. Try another keyword." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B45-4N-gFP">
-                                        <rect key="frame" x="16" y="242.5" width="343" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <rect key="frame" x="16" y="241.5" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo by Brandi Redd on Unsplash" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZX-ly-ix7">
                                         <rect key="frame" x="8" y="483" width="359" height="12"/>
@@ -720,7 +725,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq3-tu-J6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4626.3999999999996" y="-821.73913043478262"/>
+            <point key="canvasLocation" x="2649" y="-49"/>
         </scene>
         <!--Unsplash Photo View Controller-->
         <scene sceneID="n42-0n-L1J">
@@ -834,7 +839,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tYm-rv-8cx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5412" y="-824.43778110944538"/>
+            <point key="canvasLocation" x="3406" y="-49"/>
         </scene>
         <!--Home Table View Controller-->
         <scene sceneID="SKt-pp-AC9">
@@ -882,7 +887,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lVx-Wv-AwH">
                                                     <rect key="frame" x="8" y="200.5" width="339" height="25"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_notification" translatesAutoresizingMaskIntoConstraints="NO" id="ezY-hA-b6f">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="ezY-hA-b6f">
                                                             <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="PeD-a3-hiO"/>
@@ -1026,14 +1031,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4pz-gN-qRk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3808.8000000000002" y="-822.63868065967017"/>
+            <point key="canvasLocation" x="2650" y="-787"/>
         </scene>
     </scenes>
     <resources>
-        <image name="empty_box" width="37.5" height="37.5"/>
-        <image name="home_notification" width="36" height="36"/>
-        <image name="paperQuotes" width="40" height="40"/>
-        <image name="preview_background" width="5041" height="7113"/>
-        <image name="unsplash_blank" width="3456" height="4965"/>
+        <image name="design_placeholder" width="480" height="270"/>
+        <image name="empty_box" width="12.5" height="12.5"/>
+        <image name="logo" width="256" height="256"/>
+        <image name="paperQuotes" width="10" height="10"/>
+        <image name="preview_background" width="1260" height="1778"/>
+        <image name="unsplash_blank" width="864" height="1241"/>
     </resources>
 </document>

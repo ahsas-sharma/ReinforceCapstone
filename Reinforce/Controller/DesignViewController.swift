@@ -104,13 +104,6 @@ class DesignViewController : UIViewController {
         reminder.body = bodyTextView.text
         reminder.image = attachmentImageView.image?.jpegData(compressionQuality: 0.50)
         reminder.createdAt = Date()
-
-        // For future implementation (optional image attachment)
-        //        if attachmentImageView.image == UIImage(named: "preview_background") {
-        //            reminder.image = nil
-        //        } else {
-        //            reminder.image = attachmentImageView.image?.jpegData(compressionQuality: 0.50)
-        //        }
     }
 
     /// Presents an imagePickerController based on the source type
@@ -132,16 +125,15 @@ class DesignViewController : UIViewController {
         notificationVisualEffectsView.clipsToBounds = true
 
         for button in actionButtons {
-            button.layer.cornerRadius = 10.0
+            button.layer.cornerRadius = 5.0
             button.clipsToBounds = true
-            button.layer.borderWidth = 0.5
-            button.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
 }
 
 // MARK: - UITextView
 extension DesignViewController : UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         switch textView {
         case titleTextView :
@@ -163,6 +155,16 @@ extension DesignViewController : UITextViewDelegate {
             return false
         }
         return true
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        // Check if textView contains only whitespace or is empty. If so, reset to default font.
+        if textView == titleTextView && textView.text.isEmptyOrWhitespace() {
+            textView.text = Constants.TextView.defaultTitleText
+        }
+        if textView == bodyTextView && textView.text.isEmptyOrWhitespace() {
+            textView.text = Constants.TextView.defaultBodyText
+        }
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
