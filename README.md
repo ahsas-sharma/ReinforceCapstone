@@ -41,4 +41,4 @@ This app allows you to design rich local notifications that combine text and ima
 * [Unsplash Photos API](https://unsplash.com/developers)
 
 ## 3rd party libraries
-* DZNEmptyDataSet - https://github.com/dzenbot/DZNEmptyDataSet
+* [DZNEmptyDataSet](https://github.com/dzenbot/DZNEmptyDataSet)
