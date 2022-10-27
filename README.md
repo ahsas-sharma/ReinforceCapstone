@@ -3,8 +3,8 @@
 An iOS app created as the capstone project for the iOS Developer nanodegree program by Udacity.
 
 <p align="center">
-  <img src="https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/DevicePreview.jpg">
-  <img src="https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/DevicePreviewBig.jpg">
+  <img src="https://github.com/ahsas-sharma/ReinforceCapstone/blob/cb83f1b590e3d2802e124616cb44a61542ade6b1/Screenshots/DevicePreview.jpg">
+  <img src="https://github.com/ahsas-sharma/ReinforceCapstone/blob/cb83f1b590e3d2802e124616cb44a61542ade6b1/Screenshots/DevicePreviewBig.jpg">
 </p>
 <p align="center">
 <b>Beautiful rich local notifications</b>
