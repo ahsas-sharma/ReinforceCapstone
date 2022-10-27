@@ -26,11 +26,11 @@ This app allows you to design rich local notifications that combine text and ima
 ## App Screenshots
 |Home Screen|Design Screen|Notification Screen|
 |--|--|--|
-| ![Home](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/Home.jpg) | ![Design](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/Design.jpg) | ![Design](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/NotificationSettings.jpg) |
+| ![Home](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/Home.jpg) | ![Design](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/Design.jpg) | ![Design](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/NotificationSettings.jpg) |
 
 |PaperQuotes Search|Unsplash Search|Unsplash Preview |
 |--|--|--|
-| ![Home](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/PaperQuotesSearch.jpg) | ![Design](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/UnsplashSearch.jpg) | ![Design](https://github.com/ahsas-sharma/Reinforce/blob/master/Screenshots/UnsplashPreview.jpg) |
+| ![Home](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/PaperQuotesSearch.jpg) | ![Design](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/UnsplashSearch.jpg) | ![Design](https://github.com/ahsas-sharma/ReinforceCapstone/blob/6a4258d68ecf2d684baf3d779974694f35fcc054/Screenshots/UnsplashPreview.jpg) |
 
 ## Requirements
 * Xcode 10.1
